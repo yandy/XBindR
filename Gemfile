@@ -23,6 +23,15 @@ end
 
 gem 'jquery-rails'
 
+group :development do
+  # Haml templates system
+  gem 'haml-rails', '>= 0.3.4'
+end
+
+group :production do
+  gem 'haml', "~> 3.1.4"
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -30,10 +39,13 @@ gem 'jquery-rails'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+# Bioinformatics
+gem 'bio' 
