@@ -1,0 +1,21 @@
+%h1 Listing proteins
+
+%table
+  %tr
+    %th Id
+    %th Description
+    %th
+    %th
+    %th
+
+  - @proteins.each do |protein|
+    %tr
+      %td= protein.id
+      %td= protein.description
+      %td= link_to 'Show', protein
+      %td= link_to 'Edit', edit_protein_path(protein)
+      %td= link_to 'Destroy', protein, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Protein', new_protein_path
