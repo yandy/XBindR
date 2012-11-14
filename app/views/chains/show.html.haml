@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Id:
+  = @chain.id
+
+= link_to 'Edit', edit_chain_path(@chain)
+\|
+= link_to 'Back', chains_path
