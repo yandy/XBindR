@@ -1,5 +1,6 @@
 defaults: &defaults
   protein_id_regexp: '[\w]+'
+  cbi_root_url: 'http://www.cbi.seu.edu.cn/cbi/'
 
 development:
   <<: *defaults

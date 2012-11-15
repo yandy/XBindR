@@ -2,8 +2,36 @@
 %html
   %head
     %title XBindR
+    = render "layouts/iecompat", handlers: [:erb]
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
+    %meta{charset: "utf-8"}
+    %meta{name: "keywords", content: "Bioinformatics,XBindR,SEU,CBI"}
   %body
-    = yield
+    .navbar.navbar-fixed-top.navbar-inverse
+      .navbar-inner
+        .container
+          = link_to "", :class => "btn btn-navbar", :"data-toggle" => "collapse", :"data-target" => ".nav-collapse" do
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to "CBI", Settings.cbi_root_url, :class => "brand"
+          .nav-collapse
+            %ul.nav
+              %li= link_to "Home", Settings.cbi_root_url
+              %li= link_to "Tools", Settings.cbi_root_url + "onlinetools/"
+              %li= link_to "Database", Settings.cbi_root_url + "databases/"
+              %li= link_to "People", Settings.cbi_root_url + "people/"
+              %li= link_to "Publications", Settings.cbi_root_url + "publications/"
+              %li= link_to "News", Settings.cbi_root_url + "news/"
+              %li= link_to "About", Settings.cbi_root_url + "intro/"
+    .container.clearfix
+      .row
+        .span3
+          .nav.nav-list
+            %li.nav-header= "About XBindR"
+            %li= link_to "Introduction", root_path, :class => "active"
+            %li= link_to "Help & Usage", help_path #TODO help path
+            %li.nav-header= "Service"
+        .span9
