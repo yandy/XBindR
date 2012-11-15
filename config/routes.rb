@@ -3,6 +3,8 @@ Xbindr::Application.routes.draw do
 
   resources :proteins
 
+  resource :data, controller: :data, only: [:show, :create]
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
