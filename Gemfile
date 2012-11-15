@@ -13,7 +13,7 @@ gem 'sqlite3'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'bootstrap-sass', '~> 2.0.3'
+  gem 'anjlab-bootstrap-rails', '>= 2.2', :require => 'bootstrap-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
@@ -31,6 +31,8 @@ end
 group :production do
   gem 'haml', "~> 3.1.4"
 end
+
+gem "settingslogic", "~> 2.0.6"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
