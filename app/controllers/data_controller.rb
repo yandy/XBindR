@@ -80,4 +80,13 @@ class DataController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  protected
+  
+  def authenticate
+    authenticate_or_request_with_http_basic do |username, password|
+      user = User.authenticate(username, password)
+      !!user
+    end
+  end
 end
