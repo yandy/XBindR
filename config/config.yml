@@ -1,0 +1,12 @@
+defaults: &defaults
+  protein_id_regexp: '[\w]+'
+
+development:
+  <<: *defaults
+  data_root: 'data'
+  pdb_data_root: 'data/pdb'
+
+production:
+  <<: *defaults
+  data_root: '/data'
+  pdb_data_root: '/data/pdb'
