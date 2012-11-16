@@ -29,10 +29,6 @@
     .container.clearfix
       .row
         .span3
-          .nav.nav-list
-            %li.nav-header= "About XBindR"
-            %li= link_to "Introduction", root_path, :class => "active"
-            %li= link_to "Help & Usage", help_path #TODO help path
-            %li.nav-header= "Service"
+          = render :partial => 'layouts/nav'
         .span9
           = yield
