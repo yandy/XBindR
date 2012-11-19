@@ -43,6 +43,7 @@ group :development do
   # Haml templates system
   gem 'haml-rails', '>= 0.3.4'
   gem 'sqlite3'
+  gem 'pry'
 end
 
 group :production do
