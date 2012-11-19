@@ -1,7 +1,19 @@
 Xbindr::Application.routes.draw do
+  get "predict/create"
+
+  get "predict/show"
+
+  get "query/create"
+
+  get "query/show"
+
   resources :chains
 
   resources :proteins
+
+  resource :query, controller: :query, only: [:show, :create]
+
+  resource :predict, controller: :predict, only: [:show, :create]
 
   resource :data, controller: :data, only: [:show, :create]
 
