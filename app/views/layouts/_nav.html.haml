@@ -1,6 +1,18 @@
-.nav.nav-tabs.nav-stacked
-  %li= link_to "Introduction", root_path, title: "Introduction to XBindR"
-  %li= link_to "Query", query_path, title: "Identification and presentation of DNA/RNA-binding residues in DNA/RNA-protein complexes of known structure"
-  %li= link_to "Prediction", predict_path, title: "Prediction of DNA/RNA-binding residues in proteins of unknown structure"
+#xb-nav.nav.nav-tabs.nav-stacked
+  %li= link_to "Introduction",root_path,
+    :"data-placement" => "right", :"data-trigger" => "hover",
+    :"data-title" => "Introduction",
+    :"data-content" => "Introduction to XBindR"
+  %li= link_to "Query", query_path,
+    :"data-placement" => "right", :"data-trigger" => "hover",
+    :"data-title" => "Query in known structures",
+    :"data-content" => "Identification and presentation of DNA/RNA-binding residues in DNA/RNA-protein complexes of known structure"
+  %li= link_to "Prediction", predict_path,
+    :"data-placement" => "right", :"data-trigger" => "hover",
+    :"data-title" => "Prediction of binding residues",
+    :"data-content" => "Prediction of DNA/RNA-binding residues in proteins of unknown structure"
   %li.divider
   %li= link_to "Help & Usage", help_path
+
+:javascript
+  $('a').popover()
