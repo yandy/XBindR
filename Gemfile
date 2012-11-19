@@ -5,8 +5,24 @@ gem 'rails', '3.2.8'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'resque', "~> 1.20.0"
 
+gem "settingslogic", "~> 2.0.6"
+
+# To use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.0.0'
+
+# To use Jbuilder templates for JSON
+gem 'jbuilder'
+
+# Deploy with Capistrano
+gem 'capistrano'
+
+# To use debugger
+# gem 'ruby-debug19', :require => 'ruby-debug'
+
+# Bioinformatics
+gem 'bio' 
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -26,28 +42,12 @@ gem 'jquery-rails'
 group :development do
   # Haml templates system
   gem 'haml-rails', '>= 0.3.4'
+  gem 'sqlite3'
 end
 
 group :production do
   gem 'haml', "~> 3.1.4"
+
+  # Use unicorn as the app server
+  gem 'unicorn'
 end
-
-gem "settingslogic", "~> 2.0.6"
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
-# Bioinformatics
-gem 'bio' 
