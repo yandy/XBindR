@@ -1,4 +1,7 @@
 class DataController < ApplicationController
+
+  before_filter :authenticate
+
   # GET /data/1
   # GET /data/1.json
   def show
