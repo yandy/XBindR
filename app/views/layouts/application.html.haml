@@ -31,4 +31,16 @@
         .span2
           = render :partial => 'layouts/nav'
         .span10
-          = yield
+          .row-fluid
+            .span12
+              - if flash[:success]
+                .alert.alert-success= flash[:success]
+              - if flash[:error]
+                .alert.alert-success= flash[:error]
+              - if flash[:notice]
+                .alert.alert-success= flash[:notice]
+              - if flash[:warning]
+                .alert.alert-success= flash[:warning]
+          .row-fluid
+            .span12
+              = yield
