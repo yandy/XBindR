@@ -1,4 +1,4 @@
-!!!
+!!!5
 %html
   %head
     %title XBindR
@@ -26,9 +26,12 @@
               %li= link_to "Publications", Settings.cbi_root_url + "publications/"
               %li= link_to "News", Settings.cbi_root_url + "news/"
               %li= link_to "About", Settings.cbi_root_url + "intro/"
-    .container.clearfix
-      .row
-        .span3
+    .container-fluid
+      .row-fluid
+        .span2
           = render :partial => 'layouts/nav'
-        .span9
+        .span10
           = yield
+
+:javascript
+  $('a').tooltip()
