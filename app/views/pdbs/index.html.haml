@@ -1,0 +1,21 @@
+%h1 Listing pdbs
+
+%table
+  %tr
+    %th Id
+    %th Description
+    %th
+    %th
+    %th
+
+  - @pdbs.each do |pdb|
+    %tr
+      %td= pdb.id
+      %td= pdb.description
+      %td= link_to 'Show', pdb
+      %td= link_to 'Edit', edit_pdb_path(pdb)
+      %td= link_to 'Destroy', pdb, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Pdb', new_pdb_path

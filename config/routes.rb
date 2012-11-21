@@ -22,7 +22,7 @@ Xbindr::Application.routes.draw do
 
   resources :chains
 
-  resources :proteins
+  resources :pdbs
 
   resource :query, controller: :query, only: [:show, :create]
 

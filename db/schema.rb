@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115021218) do
+ActiveRecord::Schema.define(:version => 20121121050607) do
 
   create_table "chains", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -20,10 +20,11 @@ ActiveRecord::Schema.define(:version => 20121115021218) do
     t.text     "resdist"
   end
 
-  create_table "proteins", :force => true do |t|
+  create_table "pdbs", :force => true do |t|
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "ct"
   end
 
   create_table "users", :force => true do |t|

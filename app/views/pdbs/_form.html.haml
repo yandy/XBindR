@@ -1,0 +1,16 @@
+= form_for @pdb do |f|
+  - if @pdb.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pdb.errors.count, "error")} prohibited this pdb from being saved:"
+      %ul
+        - @pdb.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :id
+    = f.text_field :id
+  .field
+    = f.label :description
+    = f.text_area :description
+  .actions
+    = f.submit 'Save'

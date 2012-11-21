@@ -4,8 +4,8 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  data_root: 'data'
-  pdb_data_root: 'data/pdb'
+  data_root: <%= File.join(Rails.root, 'data') %>
+  pdb_data_root: <%= File.join(Rails.root, 'data', 'pdb') %>
 
 production:
   <<: *defaults

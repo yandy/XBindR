@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Id:
+  = @pdb.id
+%p
+  %b Description:
+  = @pdb.description
+
+= link_to 'Edit', edit_pdb_path(@pdb)
+\|
+= link_to 'Back', pdbs_path

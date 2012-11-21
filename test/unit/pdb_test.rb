@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ProteinTest < ActiveSupport::TestCase
+class PdbTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
