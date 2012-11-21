@@ -1,0 +1,30 @@
+= content_for :page_title do
+  = "Update PDB data"
+
+%section{id: "step_1"}
+  %h3= "Step 1"
+  %p
+    = "Upload your data to #{Settings.pdb_data_root} in your server."
+    = "And make sure that:"
+  %ul
+    %li
+      = "There are two subdirectories in #{Settings.pdb_data_root}:"
+      %code= 'dna'
+      = "and"
+      %code= 'rna'
+    %li
+      = "subdirectory"
+      %code= 'dna'
+      = "is for the pdbs which are protein-dna complex"
+    %li
+      = "subdirectory"
+      %code= "rna"
+      = "is for the pdbs which are protein-rna complex"
+
+%section{id: "step_2"}
+  %h3= "Step 2"
+  %p
+    = "Click button"
+    %code= 'Update'
+    = "below to execute 'Updating data'"
+  = link_to "Update", data_path, :method => :post, :class => "btn"

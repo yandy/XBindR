@@ -1,4 +1,17 @@
+require 'resque/server'
+
+resque_constraint = lambda do |request|
+  ActionController::HttpAuthentication::Basic.authenticate(request) do |username, password|
+    user = User.authenticate(username, password)
+    !!user
+  end
+end
+
 Xbindr::Application.routes.draw do
+  constraints resque_constraint do
+    mount Resque::Server.new, :at => "/resque"
+  end
+
   get "predict/create"
 
   get "predict/show"

@@ -1,5 +1,5 @@
 #encoding: utf-8
-class DataPaser
+class DataParser
   @queue = :data_parser
 
   def self.perform
