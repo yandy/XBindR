@@ -1,4 +1,6 @@
 class Chain < ActiveRecord::Base
-  attr_accessible :id
+  attr_accessible :name, :resdist
   belongs_to :pdb
+
+  serialize :resdist
 end
