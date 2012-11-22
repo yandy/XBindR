@@ -25,7 +25,7 @@ class Pdb < ActiveRecord::Base
         if sample_res.resName.length == 3
           protein_chains << chain
           #puts "#{chain.id} start with #{sample_res.resName} in Protein"
-        elsif sample_res.resName.length == 1
+        else
           dna_chains << chain
           #puts "#{chain.id} start with #{sample_res.resName} in DNA"
         end
