@@ -19,3 +19,6 @@
 
 # Ignore redis db
 /dump.rdb
+
+# Ignore data
+/data
