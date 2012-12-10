@@ -1,10 +1,20 @@
 class QueryController < ApplicationController
 
-  before_filter :validate_query!
-  before_filter :get_pdb!
-  before_filter :get_chains!
+  before_filter :validate_query!, only: :create
+  before_filter :get_pdb!, only: :create
+  before_filter :get_chains!, only: :create
 
   def create
+    @result = {}
+    @chains.each do |ch|
+      res_arr = []
+      res_status = []
+      ch.resdist.each do |rn, fln, dist|
+        res_arr << rn
+        res_status << (dist < @cutoff ? "+" : "-")
+      end
+      @result[ch.name] = [res_arr, res_status]
+    end
   end
 
   def show
