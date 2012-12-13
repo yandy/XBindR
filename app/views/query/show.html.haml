@@ -1,5 +1,16 @@
-%h1 Query#show
-%p Find me in app/views/query/show.html.haml
+= form_tag query_create_path, :method => :get, :id => 'query_pdb' do
+  %legend
+    = "Query in Exist Structures"
+  %p
+    ="input PDB entry_id, chain name and select cutoff,"
+    ="we will show you those residues which binds DNA/RNA"
+  .control-group.inputs
+    .hide.alert.alert-error.ml20.mr20
+    = label_tag :entry_id, "PDB entry_id", :class => "control-label"
+    .controls
+      = text_field_tag(:entry_id)
+      -#= submit_tag "添加", :disable_with => '请稍等...', :class => "btn btn-primary js-add-from-select"
+  
 
 :javascript
   $('#xb-nav li:eq(1)').addClass('active');
