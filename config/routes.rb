@@ -12,11 +12,11 @@ Xbindr::Application.routes.draw do
     mount Resque::Server.new, :at => "/resque"
   end
 
-  get "predict/create"
+  get "predict/transaction"
 
   get "predict/show"
 
-  get "query/create"
+  get "query/transaction"
 
   get "query/show"
 
@@ -24,9 +24,9 @@ Xbindr::Application.routes.draw do
 
   resources :pdbs
 
-  resource :query, controller: :query, only: [:show, :create]
+  resource :query, controller: :query, only: [:show]
 
-  resource :predict, controller: :predict, only: [:show, :create]
+  resource :predict, controller: :predict, only: [:show]
 
   resource :data, controller: :data, only: [:show, :create]
 

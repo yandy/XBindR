@@ -1,16 +1,26 @@
-= form_tag query_create_path, :method => :get, :id => 'query_pdb' do
+= form_tag query_transaction_path, :method => :get, :id => 'query_pdb', :class => "form-horizontal" do
+  - if @error
+    .alert.alert-error= @error
   %legend
     = "Query in Exist Structures"
-  %p
+  %pre
     ="input PDB entry_id, chain name and select cutoff,"
     ="we will show you those residues which binds DNA/RNA"
-  .control-group.inputs
-    .hide.alert.alert-error.ml20.mr20
-    = label_tag :entry_id, "PDB entry_id", :class => "control-label"
+  .control-group
+    = label_tag :entry_id, "PDB id", :class => "control-label"
     .controls
-      = text_field_tag(:entry_id)
-      -#= submit_tag "添加", :disable_with => '请稍等...', :class => "btn btn-primary js-add-from-select"
-  
+      = text_field_tag(:entry_id, "", :placeholder => "PDB id")
+  .control-group
+    = label_tag :chain_id, "Chain id", :class => "control-label"
+    .controls
+      = text_field_tag(:chain_id, "", :placeholder => "Chain id")
+  .control-group
+    = label_tag :cutoff, "Distance Cutoff", :class => "control-label"
+    .controls
+      = text_field_tag(:cutoff, "", :placeholder => "Distance Cutoff")
+  .control-group
+    .controls
+      = submit_tag 'Query', :disable_with => 'Please wait...', :class => 'btn'
 
 :javascript
   $('#xb-nav li:eq(1)').addClass('active');

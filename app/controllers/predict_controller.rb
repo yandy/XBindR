@@ -1,5 +1,5 @@
 class PredictController < ApplicationController
-  def create
+  def transaction
   end
 
   def show

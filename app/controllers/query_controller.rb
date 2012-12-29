@@ -1,10 +1,10 @@
 class QueryController < ApplicationController
 
-  before_filter :validate_query!, only: :create
-  before_filter :get_pdb!, only: :create
-  before_filter :get_chains!, only: :create
+  before_filter :validate_query!, only: :transaction
+  before_filter :get_pdb!, only: :transaction
+  before_filter :get_chains!, only: :transaction
 
-  def create
+  def transaction
     @result = {}
     @chains.each do |ch|
       res_arr = []
@@ -26,7 +26,9 @@ class QueryController < ApplicationController
     @entry_id = params[:entry_id] || ""
     @chain_id = params[:chain_id] || ""
     @cutoff = params[:cutoff].to_i || 0
-    return render_query_error "Entry id required!" if @entry_id.empty? || @cutoff <= 0
+    return render_query_error "PDB id required!" if @entry_id.empty?
+    return render_query_error "Illegal PDB id" unless @entry_id =~ /^\w+$/
+    return render_query_error "Cutoff required" if @cutoff <= 0
   end
 
   def get_pdb!
@@ -39,9 +41,10 @@ class QueryController < ApplicationController
   end
 
   def render_query_error msg
+    @error = msg
     respond_to do |format|
-      format.html { render action: "show", notice: msg }
-      format.json { render json: {error: msg}, status: :unprocessable_entity }
+      format.html { render action: "show" }
+      format.json { render json: {error: @error}, status: :unprocessable_entity }
     end
   end
 end
