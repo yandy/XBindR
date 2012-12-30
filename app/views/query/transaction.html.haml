@@ -1,0 +1,6 @@
+%legend
+  = "Query Result"
+
+- @result.each do |k, v|
+  = format_seq_tbl(chain_id: k, res_arr: v.first, res_status: v.last)
+  %hr
