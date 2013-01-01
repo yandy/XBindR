@@ -1,7 +1,16 @@
 @import "twitter/bootstrap/variables";
-table {
-  .pos_res {
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+.table-seq {
+  .pos_seq {
     color: $successText;
     background-color: $successBackground;
+  }
+  th,
+  td {
+    border-top: 1px solid $tableBorder;
+    width: 20px;
   }
 }

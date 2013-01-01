@@ -12,7 +12,7 @@ class Pdb < ActiveRecord::Base
     Dir.foreach(DNA_PATH) do |f|
       next if File.directory? File.join(DNA_PATH, f)
       entry_id = f.downcase.chomp('.pdb')
-      next if Pdb.where(entry_id: entry_id).count > 0
+      next if !(entry_id =~ /^\w+$/) || Pdb.where(entry_id: entry_id).count > 0
       pdbfile = File.join(DNA_PATH, f)
       biopdb = Bio::FlatFile.open(Bio::PDB, pdbfile).entries.first
       next if biopdb.nil?
@@ -51,14 +51,14 @@ class Pdb < ActiveRecord::Base
           #puts resName, min_dist
           resdist << [Bio::AminoAcid.three2one(resName), resName, min_dist]
         end
-        pdb.chains.create(name: ch.id, resdist: resdist)
+        pdb.chains.create(name: ch.id.downcase, resdist: resdist)
         #puts "Finish #{ch.id}"
       end
     end
     Dir.foreach(RNA_PATH) do |f|
       next if File.directory? File.join(RNA_PATH, f)
       entry_id = f.downcase.chomp('.pdb')
-      next if Pdb.where(entry_id: entry_id).count > 0
+      next if !(entry_id =~ /^\w+$/) || Pdb.where(entry_id: entry_id).count > 0
       pdbfile = File.join(RNA_PATH, f)
       biopdb = Bio::FlatFile.open(Bio::PDB, pdbfile).entries.first
       next if biopdb.nil?
@@ -97,7 +97,7 @@ class Pdb < ActiveRecord::Base
           #puts resName, min_dist
           resdist << [Bio::AminoAcid.three2one(resName), resName, min_dist]
         end
-        pdb.chains.create(name: ch.id, resdist: resdist)
+        pdb.chains.create(name: ch.id.downcase, resdist: resdist)
         #puts "Finish #{ch.id}"
       end
     end
