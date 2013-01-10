@@ -8,6 +8,8 @@ resque_constraint = lambda do |request|
 end
 
 Xbindr::Application.routes.draw do
+  resources :predictions
+
   constraints resque_constraint do
     mount Resque::Server.new, :at => "/resque"
   end

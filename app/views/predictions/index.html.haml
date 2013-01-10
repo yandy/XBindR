@@ -1,0 +1,17 @@
+%h1 Listing predictions
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @predictions.each do |prediction|
+    %tr
+      %td= link_to 'Show', prediction
+      %td= link_to 'Edit', edit_prediction_path(prediction)
+      %td= link_to 'Destroy', prediction, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Prediction', new_prediction_path
