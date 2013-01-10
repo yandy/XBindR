@@ -1,10 +1,10 @@
 class QueryController < ApplicationController
 
-  before_filter :validate_query!, only: :transaction
-  before_filter :get_pdb!, only: :transaction
-  before_filter :get_chains!, only: :transaction
+  before_filter :validate_query!, only: :show
+  before_filter :get_pdb!, only: :show
+  before_filter :get_chains!, only: :show
 
-  def transaction
+  def show
     @result = {}
     @chains.each do |ch|
       res_arr = []
@@ -17,7 +17,7 @@ class QueryController < ApplicationController
     end
   end
 
-  def show
+  def new
   end
 
   protected
@@ -43,7 +43,7 @@ class QueryController < ApplicationController
   def render_query_error msg
     @error = msg
     respond_to do |format|
-      format.html { render action: "show" }
+      format.html { render action: "new" }
       format.json { render json: {error: @error}, status: :unprocessable_entity }
     end
   end

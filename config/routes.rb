@@ -8,31 +8,26 @@ resque_constraint = lambda do |request|
 end
 
 Xbindr::Application.routes.draw do
-  resources :predictions
 
   constraints resque_constraint do
     mount Resque::Server.new, :at => "/resque"
   end
 
-  get "predict/transaction"
+  resource :query, only: [:new, :show]
 
-  get "predict/show"
+  resource :data, only: [:show, :create]
 
-  get "query/transaction"
-
-  get "query/show"
-
-  resources :chains
-
-  resources :pdbs
-
-  resource :query, controller: :query, only: [:show]
-
-  resource :predict, controller: :predict, only: [:show]
-
-  resource :data, controller: :data, only: [:show, :create]
+  resources :predictions
 
   get "help" => "site#help"
+
+  # Data resources
+
+  #resources :chains
+
+  #resources :pdbs
+  
+  # Data resources End
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
