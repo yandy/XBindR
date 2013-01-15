@@ -17,7 +17,7 @@ Xbindr::Application.routes.draw do
 
   resource :data, controller: :data, only: [:show, :create]
 
-  resources :predictions
+  resources :predictions, only: [:show, :new, :create]
 
   get "help" => "site#help"
 
