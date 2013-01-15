@@ -1,3 +1,3 @@
 class Prediction < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :res_arr
 end

@@ -1,10 +1,19 @@
-= form_for @prediction do |f|
-  - if @prediction.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@prediction.errors.count, "error")} prohibited this prediction from being saved:"
-      %ul
-        - @prediction.errors.full_messages.each do |msg|
-          %li= msg
+= form_tag predictions_path, :id => 'predict', :class => 'form-horizontal' do
+  - if @error
+    .alert.alert-error= @error
+  %legend
+    = 'Predict Binding Site'
+  %pre
+    = 'Predict binding site for unknown protein sequence'
+  .control-group
+    = label_tag :res_arr, "Residues Sequence", :class => "control-label"
+    .controls
+      = text_field_tag(:res_arr, "", :placeholder => "Residues sequence")
+  .control-group
+    = label_tag :email, "Email", :class => "control-label"
+    .controls
+      = text_field_tag(:email, "", :placeholder => "Email which result is sent to")
+  .control-group
+    .controls
+      = submit_tag 'Go', :disable_with => 'Please wait...', :class => 'btn'
 
-  .actions
-    = f.submit 'Save'
