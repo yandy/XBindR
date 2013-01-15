@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121121090415) do
+ActiveRecord::Schema.define(:version => 20130110071937) do
 
   create_table "chains", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -28,6 +28,11 @@ ActiveRecord::Schema.define(:version => 20121121090415) do
     t.string   "ct"
     t.string   "entry_id"
     t.string   "pdbfile"
+  end
+
+  create_table "predictions", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

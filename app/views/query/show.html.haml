@@ -2,5 +2,6 @@
   = "Query Result"
 
 - @result.each do |k, v|
-  = format_seq_tbl(chain_id: k, res_arr: v.first, res_status: v.last)
+  %h3= "Chain '#{k}'"
+  = format_seq_tbl(res_arr: v.first, res_status: v.last)
   %hr

@@ -13,9 +13,9 @@ Xbindr::Application.routes.draw do
     mount Resque::Server.new, :at => "/resque"
   end
 
-  resource :query, only: [:new, :show]
+  resource :query, controller: :query, only: [:new, :show]
 
-  resource :data, only: [:show, :create]
+  resource :data, controller: :data, only: [:show, :create]
 
   resources :predictions
 

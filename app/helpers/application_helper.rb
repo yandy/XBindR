@@ -1,10 +1,8 @@
 module ApplicationHelper
   def format_seq_tbl res_hash
-    chain_id = res_hash[:chain_id]
     res_arr = res_hash[:res_arr]
     res_status = res_hash[:res_status]
     idx_group = (0..(res_arr.length-1)).group_by {|i| i/20}
-    tbl_out = "<h3>Chain '#{chain_id}'</h3>"
     idx_group.each do |k, idx_arr|
       tbl_out << "<table class=\"table-bordered table-seq\">"
       tbl_out << "<thead><tr>"
