@@ -39,12 +39,4 @@ class QueryController < ApplicationController
   def get_chains!
     @chains = @chain_id.empty? ? @pdb.chains : @pdb.chains.where(name: @chain_id)
   end
-
-  def render_query_error msg
-    @error = msg
-    respond_to do |format|
-      format.html { render action: "new" }
-      format.json { render json: {error: @error}, status: :unprocessable_entity }
-    end
-  end
 end

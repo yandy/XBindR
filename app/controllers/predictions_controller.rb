@@ -24,12 +24,6 @@ class PredictionsController < ApplicationController
   # GET /predictions/new
   # GET /predictions/new.json
   def new
-    @prediction = Prediction.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @prediction }
-    end
   end
 
   # GET /predictions/1/edit
@@ -40,6 +34,7 @@ class PredictionsController < ApplicationController
   # POST /predictions
   # POST /predictions.json
   def create
+    res_arr = params[:res_arr]
     @prediction = Prediction.new(params[:prediction])
 
     respond_to do |format|
