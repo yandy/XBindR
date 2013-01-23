@@ -6,13 +6,13 @@
   %pre
     = 'Predict binding site for unknown protein sequence'
   .control-group
-    = label_tag :res_arr, "Residues Sequence", :class => "control-label"
+    = label_tag "prediction[res_arr]", "Residues Sequence", :class => "control-label"
     .controls
-      = text_field_tag(:res_arr, "", :placeholder => "Residues sequence")
+      = text_field_tag("prediction[res_arr]", "", :placeholder => "Residues sequence")
   .control-group
-    = label_tag :email, "Email", :class => "control-label"
+    = label_tag "prediction[email]", "Email", :class => "control-label"
     .controls
-      = text_field_tag(:email, "", :placeholder => "Email which result is sent to")
+      = email_field_tag("prediction[email]", "", :placeholder => "Email which result is sent to")
   .control-group
     .controls
       = submit_tag 'Go', :disable_with => 'Please wait...', :class => 'btn'

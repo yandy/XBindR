@@ -34,17 +34,14 @@ class PredictionsController < ApplicationController
   # POST /predictions
   # POST /predictions.json
   def create
-    res_arr = params[:res_arr]
-    @prediction = Prediction.new(params[:prediction])
+    return render_query_error "Invalid input" unless valid_params? params[:prediction]
+    @prediction = Prediction.where(res_arr: @res_arr).first_or_create
+    @prediction.send_result @email
 
     respond_to do |format|
-      if @prediction.save
-        format.html { redirect_to @prediction, notice: 'Prediction was successfully created.' }
-        format.json { render json: @prediction, status: :created, location: @prediction }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @prediction.errors, status: :unprocessable_entity }
-      end
+      @notice = "Your task were accepted, the result will be sent to you by email"
+      format.html { render action: "new" }
+      format.json { render json: @prediction, status: :created, location: @prediction }
     end
   end
 
@@ -75,4 +72,13 @@ class PredictionsController < ApplicationController
       #format.json { head :no_content }
     #end
   #end
+
+  protected
+  def valid_params? params
+    @res_arr = (params[:res_arr] || "").upcase
+    @email = params[:email] || ""
+    return false unless @res_arr =~ Settings.protein_seq_regexp
+    return false unless @email =~ Settings.email_regexp
+    return true
+  end
 end

@@ -1,5 +1,7 @@
 defaults: &defaults
   protein_id_regexp: '[\w]+'
+  protein_seq_regexp: 'ARDCQEHIGNLKMFPSTWYV'
+  email_regexp: '\A[^@]+@[^@]+\z'
   cbi_root_url: 'http://www.cbi.seu.edu.cn/cbi/'
 
 development:
