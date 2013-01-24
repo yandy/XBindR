@@ -7,8 +7,8 @@
 # Ignore bundler config
 /.bundle
 
-# Ignore vendor ruby
-/vendor/ruby
+# Ignore Gemfile.lock
+/Gemfile.lock
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -17,8 +17,22 @@
 /log/*.log
 /tmp
 
-# Ignore redis db
-/dump.rdb
 
-# Ignore data
-/data
+# Ignore all swo
+*.swo
+# Ignore vim swap files
+*.swp
+*~
+
+# Ignore gems vendor
+/vendor/ruby
+
+# Ignore precompiled assets
+/public/assets/*
+!/public/assets/manifest.yml
+
+# Ignore resque file
+dump.rdb
+
+#ignore .DS
+.DS_Store
