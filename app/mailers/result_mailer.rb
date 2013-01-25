@@ -1,8 +1,6 @@
 #encoding: utf-8
 class ResultMailer < ActionMailer::Base
 
-  include Resque::Mailer
-
   default from: "XBindR <no-reply@cbi.seu.edu.cn"
 
   # Subject can be set in your I18n file at config/locales/en.yml

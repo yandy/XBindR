@@ -36,7 +36,7 @@ class PredictionsController < ApplicationController
   def create
     return render_query_error "Invalid input" unless valid_params? params[:prediction]
     @prediction = Prediction.where(res_arr: @res_arr).first_or_create
-    @prediction.send_result @email
+    Resque.enqueue(ProgressPrediction @prediction, @email)
 
     respond_to do |format|
       @notice = "Your task were accepted, the result will be sent to you by email"

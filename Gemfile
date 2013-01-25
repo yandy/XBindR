@@ -6,7 +6,6 @@ gem 'rails', '3.2.8'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'resque', "~> 1.20.0"
-gem 'resque_mailer'
 
 gem "settingslogic", "~> 2.0.6"
 

@@ -40,3 +40,7 @@ dump.rdb
 # Ignore data and keep data directory
 /data/*
 !/data/.gitkeep
+
+# Ignore sublime text 2 project files
+*.sublime-project
+*.sublime-workspace
