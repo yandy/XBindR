@@ -1,0 +1,17 @@
+.content
+  %p
+    = "You receive this email because"
+    = "you have submitted an prediction request for"
+    = "RNA/DNA and protein binding site"
+  %p
+    = "Please click the following link to view prediction result"
+.link
+    = link_to "View Result", show_prediction_url(@pred["id"])
+.sign
+  = "---"
+  %br/
+  = link_to "Center of BioInformatics", "http://www.cbi.seu.edu.cn"
+  %br/
+  = link_to "State Key Lab of BioElectricity", "http://lmbe.seu.edu.cn"
+  %br/
+  = link_to "Southeast University", "http://www.seu.edu.cn"

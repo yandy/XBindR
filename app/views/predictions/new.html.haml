@@ -1,6 +1,8 @@
 = form_tag predictions_path, :id => 'predict', :class => 'form-horizontal' do
   - if @error
     .alert.alert-error= @error
+  - if @notice
+    .alert.alert-success= @notice
   %legend
     = 'Predict Binding Site'
   %pre
