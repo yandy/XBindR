@@ -11,6 +11,6 @@ class ResultMailer < ActionMailer::Base
   def binding_prediction_mail(pred, emails)
     @pred = pred
 
-    mail ({to: emails, subject: "[XBindR]Binding Site Prediction Result, sid: #{pred["id"]}"})
+    mail ({to: emails, subject: "[XBindR]Binding Site Prediction Result, sid: #{pred.id}"})
   end
 end

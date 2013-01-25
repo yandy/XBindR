@@ -24,6 +24,7 @@ class PredictionsController < ApplicationController
   # GET /predictions/new
   # GET /predictions/new.json
   def new
+    @prediction = Prediction.new
   end
 
   # GET /predictions/1/edit
@@ -34,14 +35,21 @@ class PredictionsController < ApplicationController
   # POST /predictions
   # POST /predictions.json
   def create
-    return render_query_error "Invalid input" unless valid_params? params[:prediction]
-    @prediction = Prediction.where(res_arr: @res_arr).first_or_create
-    Resque.enqueue(ProgressPrediction @prediction, @email)
+    p = params[:prediction]
+    q = filter_params(p)
+    @prediction = Prediction.where(q).first_or_initialize
+    @prediction.email = p[:email]
 
     respond_to do |format|
-      @notice = "Your task were accepted, the result will be sent to you by email"
-      format.html { render action: "new" }
-      format.json { render json: @prediction, status: :created, location: @prediction }
+      if @prediction.save
+        @notice = "Your task were accepted, the result will be sent to you by email"
+        Resque.enqueue(ProgressPrediction, @prediction.id, @prediction.email)
+        format.html { render action: "new" }
+        format.json { render json: @prediction, status: :created, location: @prediction }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @prediction.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -74,11 +82,13 @@ class PredictionsController < ApplicationController
   #end
 
   protected
-  def valid_params? params
-    @res_arr = (params[:res_arr] || "").upcase
-    @email = params[:email] || ""
-    return false unless @res_arr =~ Settings.protein_seq_regexp
-    return false unless @email =~ Settings.email_regexp
-    return true
+
+  def filter_params p
+    q = {
+      :res_arr => p[:res_arr].upcase,
+      :nt => p[:nt]
+    }
+    q
   end
+
 end

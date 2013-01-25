@@ -1,5 +1,6 @@
 module ApplicationHelper
   def format_seq_tbl res_hash
+    tbl_out = ""
     res_arr = res_hash[:res_arr]
     res_status = res_hash[:res_status]
     idx_group = (0..(res_arr.length-1)).group_by {|i| i/20}

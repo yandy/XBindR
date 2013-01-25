@@ -1,20 +1,9 @@
-= form_tag predictions_path, :id => 'predict', :class => 'form-horizontal' do
-  - if @error
-    .alert.alert-error= @error
+= semantic_form_for @prediction do |f|
   - if @notice
     .alert.alert-success= @notice
-  %legend
-    = 'Predict Binding Site'
-  %pre
-    = 'Predict binding site for unknown protein sequence'
-  .control-group
-    = label_tag "prediction[res_arr]", "Residues Sequence", :class => "control-label"
-    .controls
-      = text_field_tag("prediction[res_arr]", "", :placeholder => "Residues sequence")
-  .control-group
-    = label_tag "prediction[email]", "Email", :class => "control-label"
-    .controls
-      = email_field_tag("prediction[email]", "", :placeholder => "Email which result is sent to")
-  .control-group
-    .controls
-      = submit_tag 'Go', :disable_with => 'Please wait...', :class => 'btn'
+  = f.inputs do
+    = f.input :res_arr, :required => true, :label => "Residues Sequence", :as => :text
+    = f.input :nt, :required => true, :label => "Nucleic Acid", :as => :radio, :collection => { "DNA" => 0, "RNA" => 1}
+    = f.input :email, :required => true, :label => "Email", :as => :email, :placeholder => "Email to which the result will be sent"
+  = f.actions do
+    = f.action :submit, :label => "Go"

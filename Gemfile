@@ -8,6 +8,7 @@ gem 'rails', '3.2.8'
 gem 'resque', "~> 1.20.0"
 
 gem "settingslogic", "~> 2.0.6"
+gem 'formtastic', "~> 2.2"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -22,7 +23,7 @@ gem 'capistrano'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 # Bioinformatics
-gem 'bio' 
+gem 'bio'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -30,6 +31,7 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'anjlab-bootstrap-rails', '>= 2.2', :require => 'bootstrap-rails'
+  gem 'formtastic-bootstrap', '~> 2.0.0'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
