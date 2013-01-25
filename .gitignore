@@ -34,5 +34,9 @@
 # Ignore resque file
 dump.rdb
 
-#ignore .DS
+# Ignore .DS
 .DS_Store
+
+# Ignore data and keep data directory
+/data/*
+!/data/.gitkeep
