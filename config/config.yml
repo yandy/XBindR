@@ -3,6 +3,7 @@ defaults: &defaults
   protein_seq_regexp: '[ARDCQEHIGNLKMFPSTWYV]+'
   email_regexp: '\A[^@]+@[^@]+\z'
   cbi_root_url: 'http://www.cbi.seu.edu.cn/cbi/'
+  lock_files_root: <%= File.join(Rails.root, 'tmp', 'locks') %>
 
 development:
   <<: *defaults
@@ -12,4 +13,4 @@ development:
 production:
   <<: *defaults
   data_root: '/data'
-  pdb_data_root: '/data/pdb'
+  pdb_data_root: '/data/pdb''
