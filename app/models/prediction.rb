@@ -1,3 +1,5 @@
+require 'xbindr'
+
 class Prediction < ActiveRecord::Base
 
 	attr_accessor :email
@@ -23,6 +25,12 @@ class Prediction < ActiveRecord::Base
 	}
 
 	def do_predict!
-		# pass
+		case nt
+		when 0
+			self.res_status = XbindR::DNAPrediction.do_predict res_arr
+		when 1
+			self.res_status = XbindR::RNAPrediction.do_predict res_arr
+		end
+		self.save
 	end
 end
