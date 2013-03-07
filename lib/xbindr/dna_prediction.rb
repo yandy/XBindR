@@ -1,3 +1,5 @@
+require 'open3'
+
 module XbindR
 	class DNAPrediction
 		class self
@@ -15,10 +17,19 @@ module XbindR
 		end
 
 		def predict_chain!
+			pssm_out = self.passm
 		end
 
 		def pssm
-			#pass
+			out = ""
+			Open3.popen3(
+				"blastpgp -j 3 -h 0.001 -d #{Settings.nr_file} -Q $dir/a.cqa -F C") do 
+				|stdin, stdout, stderr|
+				stdin.write self.res_arr
+				stdin.close_write
+				out = stdout.read
+			end
+			return out
 		end
 	end
 end
