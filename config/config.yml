@@ -10,9 +10,11 @@ development:
   data_root: <%= File.join(Rails.root, 'data') %>
   pdb_data_root: <%= File.join(Rails.root, 'data', 'pdb') %>
   nr_file: <%= File.join(Rails.root, 'data', 'blast', "nr") %>
+  tmp_root: <%= File.join(Rails.root, 'tmp') %>
 
 production:
   <<: *defaults
   data_root: '/data'
   pdb_data_root: '/data/pdb'
   nr_file: '/data/blast/nr'
+  tmp_root: '/data/tmp'

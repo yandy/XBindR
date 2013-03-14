@@ -17,19 +17,37 @@ module XbindR
 		end
 
 		def predict_chain!
-			pssm_out = self.passm
+			align, pssm= self.exec_blastpgp
+			npssm = self.pssm_normalization pssm
 		end
 
-		def pssm
-			out = ""
+		def exec_blastpgp
+			align = ""
+			pssm_filename = File.join(
+				Settings.tmp_root,
+				Time.now.strftime "pssm_%Y%m%d%H%M%S%L"
+				)
 			Open3.popen3(
-				"blastpgp -j 3 -h 0.001 -d #{Settings.nr_file} -Q $dir/a.cqa -F C") do 
+				"blastpgp -j 3 -h 0.001 -d #{Settings.nr_file} -Q #{pssm_filename} -F C") do 
 				|stdin, stdout, stderr|
 				stdin.write self.res_arr
 				stdin.close_write
-				out = stdout.read
+				align = stdout.read.strip
 			end
-			return out
+			pssm = open(pssm_filename).read.strip
+			return align, pssm
+		end
+
+		def pssm_normalization pssm
+			rlines = pssm.split "\n"
+			rlines = rlines.map { |l| l.strip.split(" ")[2..21] }
+			rlines = rlines[2..-7]
+			n_pssm = rlines.map do |l|
+				l.map do |i|
+					i = i.to_i
+					1/(1+2.7182**(-i))
+				end
+			end
 		end
 	end
 end
