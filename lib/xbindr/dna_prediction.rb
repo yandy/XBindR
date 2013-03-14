@@ -19,6 +19,7 @@ module XbindR
 		def predict_chain!
 			align, pssm= self.exec_blastpgp
 			npssm = self.pssm_normalization pssm
+
 		end
 
 		def exec_blastpgp
@@ -34,20 +35,26 @@ module XbindR
 				stdin.close_write
 				align = stdout.read.strip
 			end
-			pssm = open(pssm_filename).read.strip
+			p = open(pssm_filename).read.strip
+			pssm = p.split "\n".map { |l| l.strip.split(" ")[0..21] }
+			pssm = pssm[2..-7]
 			return align, pssm
 		end
 
 		def pssm_normalization pssm
-			rlines = pssm.split "\n"
-			rlines = rlines.map { |l| l.strip.split(" ")[2..21] }
-			rlines = rlines[2..-7]
-			n_pssm = rlines.map do |l|
-				l.map do |i|
-					i = i.to_i
-					1/(1+2.7182**(-i))
-				end
+			n_pssm = pssm.map do |l|
+				[
+					l[0..1],
+					l[2..-1].map do |i|
+						i = i.to_i
+						1/(1+2.7182**(-i))
+					end
+				]
 			end
+		end
+
+		def method_name
+			
 		end
 	end
 end
