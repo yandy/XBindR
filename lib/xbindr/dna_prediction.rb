@@ -1,4 +1,5 @@
 require 'open3'
+require 'const'
 
 module XbindR
 	class DNAPrediction
@@ -18,9 +19,11 @@ module XbindR
 
 		def predict_chain!
 			align, pssm= self.exec_blastpgp
-			npssm = self.pssm_normalization pssm
-
+			npssm = self.norm_pssm pssm
+			pssmpp = self.cal_pssmpp npssm
 		end
+
+		protected
 
 		def exec_blastpgp
 			align = ""
@@ -41,7 +44,7 @@ module XbindR
 			return align, pssm
 		end
 
-		def pssm_normalization pssm
+		def norm_pssm pssm
 			n_pssm = pssm.map do |l|
 				[
 					l[0..1],
@@ -53,8 +56,7 @@ module XbindR
 			end
 		end
 
-		def method_name
-			
+		def cal_pssmpp npssm
 		end
 	end
 end
