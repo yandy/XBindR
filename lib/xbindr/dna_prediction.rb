@@ -11,41 +11,50 @@ module XbindR
 			end
 		end
 
-		attr_accessor :res_arr, :res_status, :runtimestamp
-		attr_accessor :pssm_label
+		attr_accessor :res_arr, :res_status
+		attr_accessor :runtimestamp, :runtime_root, :input_fn, :pssm_assic_fn, :pssm_chk_fn
 
 		def initialize(res_arr)
 			self.res_arr = res_arr
 			self.runtimestamp = Time.now.strftime "pssm_%Y%m%d%H%M%S%L"
+			self.runtime_root = File.join(Settings.tmp_dir, self.runtime_root)
+			Dir.mkdir(self.runtime_root, 0755)
+			self.input_fn = File.join(self.runtime_root, 'input.fasta')
+			File.open(self.input_fn, "w") do |f|
+				f.write ">#{self.runtimestamp}\n"
+				f.write self.res_arr
+			end
 		end
 
 		def predict_chain!
-			align, pssm= self.exec_blastpgp
+			self.exec_blastpgp
+			pssm_label, pssm = self.gen_pssm
 			npssm = self.norm_pssm pssm
-			pssmpp = self.cal_pssmpp npssm
+			pssmpp = self.gen_pssmpp npssm, pssm_label
+			self.exec_psipred
+			seconary = self.gen_seconary
+			sixenc = self.gen_sixencode
+			#RF
+			self.clean_tmp
 		end
 
 		protected
 
 		def exec_blastpgp
-			align = ""
-			pssm_filename = File.join(
-				Settings.tmp_root,
-				self.runtimestamp
-				)
-			Open3.popen3(
-				"#{Settings.bin_dir}/blastpgp -j 3 -h 0.001 -d #{Settings.nr_file} -Q #{pssm_filename} -F C") do 
-				|stdin, stdout, stderr|
-				stdin.write self.res_arr
-				stdin.close_write
-				align = stdout.read.strip
-			end
-			p = open(pssm_filename).read.strip
-			File.delete(pssm_filename)
+			cmd_str = "#{Settings.bin_dir}/blastpgp -b 0 -j 3\
+			-h 0.001 -d #{Settings.dbname} -i #{self.input_fn}\
+			-Q #{self.pssm_assic_fn} -C #{self.pssm_chk_fn}"
+			cmd = cmd_str.split(' ')
+			output, status = Open3.capture2(cmd)
+			raise "Failed to exec blastpgp" if status != 0
+		end
+
+		def gen_pssm
+			p = open(self.pssm_assic_fn).read.strip
 			pssm = p.split("\n").map { |l| l.strip.split(" ")[0..21] }
-			self.pssm_label = pssm[1]
+			pssm_label = pssm[1]
 			pssm = pssm[2..-7]
-			return align, pssm
+			return pssm_label, pssm
 		end
 
 		def norm_pssm pssm
@@ -60,7 +69,7 @@ module XbindR
 			end
 		end
 
-		def cal_pssmpp npssm
+		def gen_pssmpp npssm, pssm_label
 			npssm.map do |t, line|
 				shu_sum   = 0
 				pka_sum   = 0
@@ -80,24 +89,21 @@ module XbindR
 			end
 		end
 
-		def exec_runpsipred
-			runpsipred_filename = File.join(
-				Settings.tmp_root,
-				self.runtimestamp
-				)
-			File.open(runpsipred_filename, "w") do |file|
-				file.write(">#{runpsipred_filename}\n")
-				file.write(self.res_arr.join(""))
-			end
-			Open3.popen3(
-				"#{Settings.bin_dir}/runpsipred #{runpsipred_filename}") do
-				|stdin, stdout, stderr|
-				stdin.close_write
-				out = stdout.read
-			end
-			second = File.read("#{runpsipred_filename}.ss2")
-			File.delete("#{runpsipred_filename}.ss2")
-			File.delete(runpsipred_filename)
+		def exec_psipred
+			
 		end
+
+		def gen_seconary
+			
+		end
+
+		def gen_sixencode
+			
+		end
+
+		def clean_tmp
+			
+		end
+
 	end
 end
