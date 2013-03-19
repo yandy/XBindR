@@ -1,0 +1,7 @@
+args<-commandArgs(TRUE)
+library("randomForest")
+submit<-read.table(args)
+submit<-as.matrix(submit)
+load("RFDATA3.5")
+vote<-predict(RF_tfbs,submit,type="prob",norm.votes=TRUE)
+write.table(vote,'vote.txt',quote=FALSE,sep='\t',col.names=FALSE,row.names=FALSE)
