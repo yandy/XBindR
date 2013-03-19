@@ -4,12 +4,9 @@ class Prediction < ActiveRecord::Base
 
 	attr_accessor :email
 
-	serialize :res_arr
-	serialize :res_status
+	attr_accessible :res_seq, :nt, :email
 
-	attr_accessible :res_arr, :nt, :email
-
-	validates :res_arr,
+	validates :res_seq,
 	:length => {
 		:minimum => 11
 		},
@@ -27,9 +24,9 @@ class Prediction < ActiveRecord::Base
 	def do_predict!
 		case nt
 		when 0
-			self.res_status = XbindR::DNAPrediction.do_predict res_arr
+			self.res_status = XbindR::DNAPrediction.do_predict res_seq
 		when 1
-			self.res_status = XbindR::RNAPrediction.do_predict res_arr
+			self.res_status = XbindR::RNAPrediction.do_predict res_seq
 		end
 		self.save
 	end

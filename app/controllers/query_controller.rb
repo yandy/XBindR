@@ -7,13 +7,13 @@ class QueryController < ApplicationController
   def show
     @result = {}
     @chains.each do |ch|
-      res_arr = []
-      res_status = []
+      res_seq = ""
+      res_status = ""
       ch.resdist.each do |rn, fln, dist|
-        res_arr << rn
+        res_seq << rn
         res_status << (dist < @cutoff ? "+" : "-")
       end
-      @result[ch.name] = [res_arr, res_status]
+      @result[ch.name] = [res_seq, res_status]
     end
   end
 

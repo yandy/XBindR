@@ -1,9 +1,9 @@
 module ApplicationHelper
   def format_seq_tbl res_hash
     tbl_out = ""
-    res_arr = res_hash[:res_arr]
+    res_seq = res_hash[:res_seq]
     res_status = res_hash[:res_status]
-    idx_group = (0..(res_arr.length-1)).group_by {|i| i/20}
+    idx_group = (0..(res_seq.length-1)).group_by {|i| i/20}
     idx_group.each do |k, idx_arr|
       tbl_out << "<table class=\"table-bordered table-seq\">"
       tbl_out << "<thead><tr>"
@@ -15,7 +15,7 @@ module ApplicationHelper
       tbl_out << "<tbody><tr>"
       idx_arr.each do |idx|
         cls = ((res_status[idx] == "+") ? ' class="pos_seq"' : '')
-        tbl_out << "<td#{cls}>#{res_arr[idx]}</td>"
+        tbl_out << "<td#{cls}>#{res_seq[idx]}</td>"
       end
       tbl_out << "</tr><tr>"
       idx_arr.each do |idx|
