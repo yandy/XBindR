@@ -1,15 +1,14 @@
 require 'open3'
-require 'const'
 
 module XbindR
 	class DNAPrediction
-		class self
-			def do_predict res_seq
-				p = DNAPrediction.new res_seq
-				p.predict_chain!
-				return p.res_status
-			end
+		
+		def self.do_predict res_seq
+			p = DNAPrediction.new res_seq
+			p.predict_chain!
+			return p.res_status
 		end
+		
 
 		WIN_LEN = 11
 
@@ -84,12 +83,12 @@ module XbindR
 				power_sum = 0
 				wie_sum   = 0
 				line.each_with_index do |item, index|
-					shu_sum   += item * Const::SHU[pssm_label[index]]
-					pka_sum   += item * Const::PKA[pssm_label[index]]
-					quan_sum  += item * Const::QUAN[pssm_label[index]]
-					bal_sum   += item * Const::BAL[pssm_label[index]]
-					power_sum += item * Const::POWER[pssm_label[index]]
-					wie_sum   += item * Const::WIE[pssm_label[index]]
+					shu_sum   += item * XConst::SHU[pssm_label[index]]
+					pka_sum   += item * XConst::PKA[pssm_label[index]]
+					quan_sum  += item * XConst::QUAN[pssm_label[index]]
+					bal_sum   += item * XConst::BAL[pssm_label[index]]
+					power_sum += item * XConst::POWER[pssm_label[index]]
+					wie_sum   += item * XConst::WIE[pssm_label[index]]
 				end
 				[shu_sum, pka_sum, quan_sum, bal_sum, power_sum, wie_sum]
 			end
@@ -141,7 +140,7 @@ module XbindR
 		def gen_sixencode
 			sixenc = []
 			self.res_seq.each_char do |c|
-				sixenc << Const::SIXENC[c]
+				sixenc << XConst::SIXENC[c]
 			end
 			return sixenc
 		end

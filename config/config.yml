@@ -8,15 +8,15 @@ defaults: &defaults
 development:
   <<: *defaults
   cbi_root: <%= File.join(Rails.root, 'vendor', 'cbi') %>
-  bin_dir: <%= File.join(cbiroot, 'bin') %>
-  data_dir: <%= File.join(cbiroot, 'data') %>
-  dbname: <%= File.join(data_dir, 'nr') %>
+  bin_dir: <%= File.join(Rails.root, 'vendor', 'cbi', 'bin') %>
+  data_dir: <%= File.join(Rails.root, 'vendor', 'cbi', 'data') %>
+  dbname: <%= File.join(Rails.root, 'vendor', 'cbi', 'data', 'nr') %>
   tmp_dir: <%= File.join(Rails.root, 'tmp', 'cbi') %>
 
 production:
   <<: *defaults
   cbi_root: '/cbi'
-  bin_dir: <%= File.join(cbiroot, 'bin') %>
-  data_dir: <%= File.join(cbiroot, 'data') %>
-  dbname: <%= File.join(data_dir, 'nr') %>
+  bin_dir: '/cbi/bin'
+  data_dir: '/cbi/data'
+  dbname: '/cbi/nr'
   tmp_dir: '/tmp/cbi'

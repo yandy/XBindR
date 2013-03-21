@@ -39,7 +39,11 @@ dump.rdb
 
 # Ignore data and keep data directory
 /data/*
-!/data/.gitkeep
+/vendor/cbi/data
+!/vendor/cbi/data/RFDATA3.5
+!/vendor/cbi/data/pdb/dna/.gitkeep
+!/vendor/cbi/data/pdb/rna/.gitkeep
+!/vendor/cbi/data/psipred/.gitkeep
 
 # Ignore sublime text 2 project files
 *.sublime-project

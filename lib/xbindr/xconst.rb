@@ -1,5 +1,5 @@
 module XbindR
-	class Const
+	class XConst
 		SHU = {
 			"A"=>0.6847826086956521,
 			"C"=>0.0,

@@ -5,8 +5,8 @@ class Pdb < ActiveRecord::Base
   attr_accessible :description, :entry_id, :biopdb, :pdbfile, :ct
   has_many :chains, :dependent => :destroy
 
-  DNA_PATH = File.join(Settings.pdb_data_root, 'dna')
-  RNA_PATH = File.join(Settings.pdb_data_root, 'rna')
+  DNA_PATH = File.join(Settings.data_dir, 'pdb', 'dna')
+  RNA_PATH = File.join(Settings.data_dir, 'pdb', 'rna')
 
   def self.build_pdb_db
     Dir.foreach(DNA_PATH) do |f|
