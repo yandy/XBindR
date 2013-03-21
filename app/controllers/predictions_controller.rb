@@ -85,7 +85,7 @@ class PredictionsController < ApplicationController
 
   def filter_params p
     q = {
-      :res_arr => p[:res_arr].upcase,
+      :res_seq => p[:res_seq].upcase,
       :nt => p[:nt]
     }
     q

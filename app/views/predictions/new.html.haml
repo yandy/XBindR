@@ -2,7 +2,7 @@
   - if @notice
     .alert.alert-success= @notice
   = f.inputs do
-    = f.input :res_arr, :required => true, :label => "Residues Sequence", :as => :text
+    = f.input :res_seq, :required => true, :label => "Residues Sequence", :as => :text
     = f.input :nt, :required => true, :label => "Nucleic Acid", :as => :radio, :collection => { "DNA" => 0, "RNA" => 1}
     = f.input :email, :required => true, :label => "Email", :as => :email, :placeholder => "Email to which the result will be sent"
   = f.actions do
