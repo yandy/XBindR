@@ -11,6 +11,8 @@ module XbindR
 			end
 		end
 
+		WIN_LEN = 11
+
 		attr_accessor :res_seq, :res_status
 		attr_accessor :runtimestamp, :runtime_root, :fn_root
 		attr_accessor :seq_fn, :pssm_assic_fn, :pssm_chk_fn, :psipass2_fn, :rfmat_fn
@@ -146,12 +148,12 @@ module XbindR
 
 		def build_rfmat
 			f = File.open(self.rfmat_fn, 'w')
-			(self.res_seq.length - 11 + 1).times.each do |idx|
-				f.write self.pssmpp[idx...11].map { |l| l.join "\t" }.join "\t"
+			(self.res_seq.length - WIN_LEN + 1).times.each do |idx|
+				f.write self.pssmpp[idx...WIN_LEN].map { |l| l.join "\t" }.join "\t"
 				f.write "\t"
-				f.write self.seconary[idx...11].map { |l| l.join "\t" }.join "\t"
+				f.write self.seconary[idx...WIN_LEN].map { |l| l.join "\t" }.join "\t"
 				f.write "\t"
-				f.write self.sixenc[idx...11].join "\t"
+				f.write self.sixenc[idx...WIN_LEN].join "\t"
 				f.write "\n"
 			end
 			f.close
@@ -166,11 +168,14 @@ module XbindR
 
 		def gen_result
 			cutoff = 0.845
+			res_status = self.vote.split("\n").map do |l|
+				if l.split("\t")[0] > cutoff then "-" else "+" end
+			end.join("")
+			self.res_status = ('-' * WIN_LEN/2) + res_status + ('-' * WIN_LEN/2)
 		end
 
 		def clean_tmp
-			
+			FileUtils.rm_rf(self.runtime_root)
 		end
-
 	end
 end
