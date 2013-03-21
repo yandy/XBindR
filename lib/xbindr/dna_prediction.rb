@@ -14,7 +14,7 @@ module XbindR
 		attr_accessor :res_seq, :res_status
 		attr_accessor :runtimestamp, :runtime_root, :fn_root
 		attr_accessor :seq_fn, :pssm_assic_fn, :pssm_chk_fn, :psipass2_fn, :rfmat_fn
-		attr_accessor :pssmpp, :seconary, :sixenc
+		attr_accessor :pssmpp, :seconary, :sixenc, :vote
 
 		def initialize(res_seq)
 			self.res_seq = res_seq
@@ -158,14 +158,14 @@ module XbindR
 		end
 
 		def exec_rf
-			cmd_str = "Rscript #{Settings.bin_dir}/RF.R #{self.rfmat_fn}"
+			cmd_str = "Rscript #{Settings.bin_dir}/RF.R #{self.rfmat_fn} #{File.join(Settings.data_dir, "RFDATA3.5")}"
 			cmd = cmd_str.split(' ')
-			output, status = Open3.capture2(cmd, :chdir => Settings.data_dir)
+			self.vote, status = Open3.capture2(cmd)
 			raise "Failed to exec rand forest of R" if status != 0
 		end
 
 		def gen_result
-			
+			cutoff = 0.845
 		end
 
 		def clean_tmp
