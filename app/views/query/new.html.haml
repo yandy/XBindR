@@ -7,7 +7,7 @@
     ="input PDB entry_id, chain name and select cutoff,"
     ="we will show you those residues which binds DNA/RNA"
   .control-group
-    = label_tag :entry_id, "PDB id", :class => "control-label"
+    = label_tag :entry_id, "PDB id", :required => true, :class => "control-label"
     .controls
       = text_field_tag(:entry_id, "", :placeholder => "PDB id")
   .control-group
@@ -15,7 +15,7 @@
     .controls
       = text_field_tag(:chain_id, "", :placeholder => "Chain id")
   .control-group
-    = label_tag :cutoff, "Distance Cutoff", :class => "control-label"
+    = label_tag :cutoff, "Distance Cutoff", :required => true, :class => "control-label"
     .controls
       = text_field_tag(:cutoff, "", :placeholder => "Distance Cutoff")
   .control-group
