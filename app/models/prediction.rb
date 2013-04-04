@@ -2,6 +2,9 @@ require 'xbindr'
 
 class Prediction < ActiveRecord::Base
 
+	TYPE_DNA = 0
+	TYPE_RNA = 1
+
 	attr_accessor :email
 
 	attr_accessible :res_seq, :nt, :cutoff, :email
@@ -17,7 +20,7 @@ class Prediction < ActiveRecord::Base
 
 	validates :cutoff, :inclusion => { :in => ["3.5", "6.0"]}
 
-	validates :nt, :inclusion => { :in => [0, 1] }
+	validates :nt, :inclusion => { :in => [TYPE_DNA, TYPE_RNA] }
 
 	validates :email, :format => {
 		:with => Regexp.new(Settings.email_regexp)
