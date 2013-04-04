@@ -36,6 +36,8 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
 
+  gem "therubyracer", :require => 'v8' unless RUBY_PLATFORM =~ /darwin/i
+
   gem 'uglifier', '>= 1.0.3'
 end
 
