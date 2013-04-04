@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130321203935) do
+ActiveRecord::Schema.define(:version => 20130404030852) do
 
   create_table "chains", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20130321203935) do
     t.string   "res_status"
     t.integer  "nt"
     t.string   "res_seq"
+    t.integer  "cutoff"
   end
 
   create_table "users", :force => true do |t|
