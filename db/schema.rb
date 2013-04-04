@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20130404030852) do
     t.string   "res_status"
     t.integer  "nt"
     t.string   "res_seq"
-    t.integer  "cutoff"
+    t.string   "cutoff"
   end
 
   create_table "users", :force => true do |t|
