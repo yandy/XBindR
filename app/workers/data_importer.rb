@@ -1,6 +1,6 @@
 #encoding: utf-8
-class DataParser
-  @queue = :data_parser
+class DataImporter
+  @queue = :data_importer
 
   def self.perform
     Pdb.build_pdb_db

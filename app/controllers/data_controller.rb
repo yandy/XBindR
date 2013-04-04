@@ -10,7 +10,7 @@ class DataController < ApplicationController
   # POST /data
   # POST /data.json
   def create
-    Resque.enqueue(DataParser)
+    Resque.enqueue(DataImporter)
 
     respond_to do |format|
       format.html { redirect_to root_url, notice: 'Task accepted! Data Processing will start later' }
