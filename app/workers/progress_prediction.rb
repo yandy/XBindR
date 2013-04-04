@@ -1,6 +1,6 @@
 #encoding: utf-8
 class ProgressPrediction
-  @queue = :data_parser
+  @queue = :low
 
   def self.perform pred_id, email
   	pred = Prediction.find(pred_id)
