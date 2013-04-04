@@ -20,3 +20,6 @@ production:
   data_dir: '/cbi/data'
   dbname: '/cbi/nr'
   tmp_dir: '/tmp/cbi'
+
+#Test Seq
+#TAYDVILAPVLSEKAYAGFAEGKYTFWVHPKATKTEIKNAVETAFKVKVVKVNTLHVRGKKKRLGRYLGKRPDRKKAIVQVAPGQKIEALEG

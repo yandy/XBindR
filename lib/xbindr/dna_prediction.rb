@@ -49,12 +49,11 @@ module XbindR
     protected
 
     def exec_blastpgp
-      cmd_str = "#{Settings.bin_dir}/blastpgp -b 0 -j 3\
-            -h 0.001 -d #{Settings.dbname} -i #{self.seq_fn}\
-            -Q #{self.pssm_assic_fn} -C #{self.pssm_chk_fn}"
-            cmd = cmd_str.split(' ')
-            output, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
-            raise "Failed to exec blastpgp" if status != 0
+      cmd = "#{Settings.bin_dir}/blastpgp -b 0 -j 3 \
+          -h 0.001 -d #{Settings.dbname} -i #{self.seq_fn} \
+          -Q #{self.pssm_assic_fn} -C #{self.pssm_chk_fn}"
+      output, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
+      raise "Failed to exec blastpgp" if status != 0
     end
 
     def gen_pssm
@@ -98,23 +97,20 @@ module XbindR
     def exec_psipred
       open("#{self.fn_root}.pn", "w") { |io| io.write(self.pssm_chk_fn) }
       open("#{self.fn_root}.sn", "w") { |io| io.write(self.seq_fn) }
-      cmd_str = "#{Settings.bin_dir}/makemat -P #{File.join(self.runtime_root, 'seq')}"
-      cmd = cmd_str.split(' ')
+      cmd = "#{Settings.bin_dir}/makemat -P #{File.join(self.runtime_root, 'seq')}"
       output, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
       raise "Failed to exec makemat" if status != 0
       datadir = File.join(Settings.data_dir, "psipred")
-      cmd_str = "#{Settings.bin_dir}/psipred #{self.fn_root}.mtx \
+      cmd = "#{Settings.bin_dir}/psipred #{self.fn_root}.mtx \
       #{datadir}/weights.dat #{datadir}/weights.dat2 \
       #{datadir}/weights.dat3"
-      cmd = cmd_str.split(' ')
       output, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
       raise "Failed to exec psipred" if status != 0
       open("#{self.fn_root}.ss", "w") { |io| io.write output }
       self.psipass2_fn = "#{self.fn_root}.ss2"
-      cmd_str = "#{Settings.bin_dir}/psipass2 #{datadir}/weights_p2.dat \
+      cmd = "#{Settings.bin_dir}/psipass2 #{datadir}/weights_p2.dat \
             1 1.0 1.0 #{self.psipass2_fn} #{self.fn_root}.ss"
-            cmd = cmd_str.split(' ')
-            output, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
+            output, status = Open3.capture2(cmd)
             raise "Failed to exec psipass2" if status != 0
             open("#{self.fn_root}.horiz", "w") { |io| io.write output }
     end
@@ -159,8 +155,7 @@ module XbindR
     end
 
     def exec_rf
-      cmd_str = "Rscript #{Settings.bin_dir}/RF.R #{self.rfmat_fn} #{File.join(Settings.data_dir, "RFDATA3.5")}"
-      cmd = cmd_str.split(' ')
+      cmd = "Rscript #{Settings.bin_dir}/RF.R #{self.rfmat_fn} #{File.join(Settings.data_dir, "RFDATA3.5")}"
       self.vote, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
       raise "Failed to exec rand forest of R" if status != 0
     end
