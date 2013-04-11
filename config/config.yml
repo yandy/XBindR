@@ -10,7 +10,7 @@ development:
   cbi_root: <%= File.join(Rails.root, 'vendor', 'cbi') %>
   bin_dir: <%= File.join(Rails.root, 'vendor', 'cbi', 'bin') %>
   data_dir: <%= File.join(Rails.root, 'vendor', 'cbi', 'data') %>
-  dbname: <%= File.join(Rails.root, 'vendor', 'cbi', 'data', 'nr') %>
+  dbname: <%= File.join(Rails.root, 'vendor', 'cbi', 'data', 'nr', 'nr') %>
   tmp_dir: <%= File.join(Rails.root, 'tmp', 'cbi') %>
 
 production:
