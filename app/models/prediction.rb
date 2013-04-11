@@ -10,15 +10,12 @@ class Prediction < ActiveRecord::Base
 	attr_accessible :res_seq, :nt, :cutoff, :email
 
 	validates :res_seq,
-	:length => {
-		:minimum => 11
-		},
 	:format => {
 		:with    => Regexp.new(Settings.protein_seq_regexp),
 		:message => 'Invalid protein sequence'
 	}
 
-	validates :cutoff, :inclusion => { :in => ["3.5", "6.0"]}
+	validates :cutoff, :inclusion => { :in => [3.5, 6.0]}
 
 	validates :nt, :inclusion => { :in => [TYPE_DNA, TYPE_RNA] }
 

@@ -1,6 +1,6 @@
 defaults: &defaults
   protein_id_regexp: '[\w]+'
-  protein_seq_regexp: '[ARDCQEHIGNLKMFPSTWYV]+'
+  protein_seq_regexp: '(>\w+\n)?[ARDCQEHIGNLKMFPSTWYV\n]+'
   email_regexp: '\A[^@]+@[^@]+\z'
   cbi_root_url: 'http://www.cbi.seu.edu.cn/cbi/'
   lock_files_root: <%= File.join(Rails.root, 'tmp', 'locks') %>
