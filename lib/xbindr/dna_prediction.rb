@@ -30,6 +30,7 @@ module XbindR
       end
       self.pssm_assic_fn = "#{self.fn_root}.cqa"
       self.pssm_chk_fn = "#{self.fn_root}.chk"
+      self.rfmat_fn = "#{self.fn_root}.mat"
     end
 
     def predict_chain!
@@ -40,7 +41,7 @@ module XbindR
       self.exec_psipred
       seconary = self.gen_seconary
       sixenc = self.gen_sixencode
-      self.build_rfmat
+      self.build_rfmat pssmpp, seconary, sixenc
       self.exec_rf
       self.gen_result
       self.clean_tmp
@@ -65,7 +66,7 @@ module XbindR
     end
 
     def norm_pssm pssm
-      n_pssm = pssm.map do |l|
+      pssm.map do |l|
         l[2..-1].map do |i|
           i = i.to_i
           1/(1+2.7182**(-i))
@@ -95,9 +96,9 @@ module XbindR
     end
 
     def exec_psipred
-      open("#{self.fn_root}.pn", "w") { |io| io.write(self.pssm_chk_fn) }
-      open("#{self.fn_root}.sn", "w") { |io| io.write(self.seq_fn) }
-      cmd = "#{Settings.bin_dir}/makemat -P #{File.join(self.runtime_root, 'seq')}"
+      open("#{self.fn_root}.pn", "w") { |io| io.write("seq.chk") }
+      open("#{self.fn_root}.sn", "w") { |io| io.write("seq.fasta") }
+      cmd = "#{Settings.bin_dir}/makemat -P #{self.fn_root}"
       output, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
       raise "Failed to exec makemat" if status != 0
       datadir = File.join(Settings.data_dir, "psipred")
@@ -141,14 +142,14 @@ module XbindR
       return sixenc
     end
 
-    def build_rfmat
+    def build_rfmat pssmpp, seconary, sixenc
       f = File.open(self.rfmat_fn, 'w')
       (self.res_seq.length - WIN_LEN + 1).times.each do |idx|
-        f.write self.pssmpp[idx...WIN_LEN].map { |l| l.join "\t" }.join "\t"
+        f.write pssmpp[idx...WIN_LEN].map { |l| l.join "\t" }.join "\t"
         f.write "\t"
-        f.write self.seconary[idx...WIN_LEN].map { |l| l.join "\t" }.join "\t"
+        f.write seconary[idx...WIN_LEN].map { |l| l.join "\t" }.join "\t"
         f.write "\t"
-        f.write self.sixenc[idx...WIN_LEN].join "\t"
+        f.write sixenc[idx...WIN_LEN].join "\t"
         f.write "\n"
       end
       f.close
