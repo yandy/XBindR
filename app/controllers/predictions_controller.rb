@@ -84,8 +84,11 @@ class PredictionsController < ApplicationController
   protected
 
   def filter_params p
+    rl = p[:res_seq].split '\n'
+    rl = rl[1..-1] if rl.first.start_with? ">"
+    res_seq = rl.join ""
     q = {
-      :res_seq => p[:res_seq].upcase,
+      :res_seq => res_seq,
       :nt => p[:nt],
       :cutoff => p[:cutoff].to_f
     }
