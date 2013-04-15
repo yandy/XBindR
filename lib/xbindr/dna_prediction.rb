@@ -30,6 +30,7 @@ module XbindR
       end
       self.pssm_assic_fn = "#{self.fn_root}.cqa"
       self.pssm_chk_fn = "#{self.fn_root}.chk"
+      self.psipass2_fn = "#{self.fn_root}.ss2"
       self.rfmat_fn = "#{self.fn_root}.mat"
     end
 
@@ -47,7 +48,7 @@ module XbindR
       self.clean_tmp
     end
 
-    protected
+    # protected
 
     def exec_blastpgp
       cmd = "#{Settings.bin_dir}/blastpgp -b 0 -j 3 \
@@ -108,7 +109,6 @@ module XbindR
       output, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
       raise "Failed to exec psipred" if status != 0
       open("#{self.fn_root}.ss", "w") { |io| io.write output }
-      self.psipass2_fn = "#{self.fn_root}.ss2"
       cmd = "#{Settings.bin_dir}/psipass2 #{datadir}/weights_p2.dat \
             1 1.0 1.0 #{self.psipass2_fn} #{self.fn_root}.ss"
             output, status = Open3.capture2(cmd)
@@ -118,7 +118,7 @@ module XbindR
 
     def gen_seconary
       ss = open(self.psipass2_fn).read.strip
-      ss_strlst = ss.split("\n").map { |l| l.strip.split(" ")[2] }
+      ss_strlst = ss.split("\n")[2..-1].map { |l| l.strip.split(" ")[2] }
       ssm = ss_strlst.map do |e|
         case e
         when "H"
@@ -145,11 +145,12 @@ module XbindR
     def build_rfmat pssmpp, seconary, sixenc
       f = File.open(self.rfmat_fn, 'w')
       (self.res_seq.length - WIN_LEN + 1).times.each do |idx|
-        f.write pssmpp[idx...WIN_LEN].map { |l| l.join "\t" }.join "\t"
+        offset = idx + WIN_LEN - 1
+        f.write pssmpp[idx..offset].map { |l| l.join "\t" }.join "\t"
         f.write "\t"
-        f.write seconary[idx...WIN_LEN].map { |l| l.join "\t" }.join "\t"
+        f.write seconary[idx..offset].map { |l| l.join "\t" }.join "\t"
         f.write "\t"
-        f.write sixenc[idx...WIN_LEN].join "\t"
+        f.write sixenc[idx..offset].join "\t"
         f.write "\n"
       end
       f.close
@@ -164,9 +165,9 @@ module XbindR
     def gen_result
       cutoff = 0.845
       res_status = self.vote.split("\n").map do |l|
-        if l.split("\t")[0] > cutoff then "-" else "+" end
+        if l.split("\t")[0].to_f > cutoff then "-" else "+" end
       end.join("")
-      self.res_status = ('-' * WIN_LEN/2) + res_status + ('-' * WIN_LEN/2)
+      self.res_status = ('-' * (WIN_LEN/2)) + res_status + ('-' * (WIN_LEN/2))
     end
 
     def clean_tmp
