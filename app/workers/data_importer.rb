@@ -37,7 +37,7 @@ class DataImporter
         #puts "Start creating chain #{ch.id}"
         resdist = []
         ch.residues.each do |res|
-          min_dist = 1000
+          min_dist = 1000.0
           res.atoms.each do |pa|
             dna_atoms.each do |da|
               dist = pa.xyz.distance da.xyz
@@ -53,9 +53,9 @@ class DataImporter
         # Create Prediction result
         res_seq = ""
         res_status = ""
-        resdist.each do |res1, res3, dict|
+        resdist.each do |res1, res3, dist|
             res_seq << res1
-            res_status << (dict <= 3.5) ? "+" : "-"
+            res_status << ((dist <= 3.5) ? "+" : "-")
         end
         Prediction.create res_seq: res_seq, res_status: res_status, cutoff: "3.5", nt: Prediction::TYPE_DNA
       end
@@ -108,7 +108,7 @@ class DataImporter
         res_status = ""
         resdist.each do |res1, res3, dict|
             res_seq << res1
-            res_status << (dict <= 3.5) ? "+" : "-"
+            res_status << ((dict <= 3.5) ? "+" : "-")
         end
         Prediction.create res_seq: res_seq, res_status: res_status, cutoff: "3.5", nt: Prediction::TYPE_RNA
 
@@ -116,7 +116,7 @@ class DataImporter
         res_status = ""
         resdist.each do |res1, res3, dict|
             res_seq << res1
-            res_status << (dict <= 6.0) ? "+" : "-"
+            res_status << ((dict <= 6.0) ? "+" : "-")
         end
         Prediction.create res_seq: res_seq, res_status: res_status, cutoff: "6.0", nt: Prediction::TYPE_RNA
       end

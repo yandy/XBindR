@@ -25,7 +25,7 @@ class QueryController < ApplicationController
   def validate_query!
     @entry_id = (params[:entry_id] || "").downcase
     @chain_id = (params[:chain_id] || "").downcase
-    @cutoff = params[:cutoff].to_i || 0
+    @cutoff = params[:cutoff].to_f || 0.0
     return render_query_error "PDB id required!" if @entry_id.empty?
     return render_query_error "Illegal PDB id" unless @entry_id =~ /^\w+$/
     return render_query_error "Cutoff required" if @cutoff <= 0

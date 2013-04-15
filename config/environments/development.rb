@@ -34,4 +34,17 @@ Xbindr::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Email delivery
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address        => "smtp.gmail.com",
+    :port           => 587,
+    :domain         => "cbi.seu.edu.cn",
+    :authentication => 'plain',
+    :user_name      => "freestorm.cf@gmail.com",
+    :password       => "ebb97b5d6f6b9e8f703aecaf7347568b",
+    :enable_starttls_auto => true
+  }
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end

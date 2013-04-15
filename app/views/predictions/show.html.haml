@@ -1,6 +1,4 @@
-%p#notice= notice
+%legend
+  = "Prediction Result"
 
-
-= link_to 'Edit', edit_prediction_path(@prediction)
-\|
-= link_to 'Back', predictions_path
+= format_seq_tbl(res_seq: @prediction.res_seq, res_status: @prediction.res_status)

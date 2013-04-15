@@ -38,12 +38,11 @@ class PredictionsController < ApplicationController
     p = params[:prediction]
     q = filter_params(p)
     @prediction = Prediction.where(q).first_or_initialize
-    @prediction.email = p[:email]
-
+    
     respond_to do |format|
       if @prediction.save
         @notice = "Your task were accepted, the result will be sent to you by email"
-        Resque.enqueue(ProgressPrediction, @prediction.id, @prediction.email)
+        Resque.enqueue(ProgressPrediction, @prediction.id, p[:email])
         format.html { render action: "new" }
         format.json { render json: @prediction, status: :created, location: @prediction }
       else
