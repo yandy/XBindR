@@ -40,7 +40,7 @@ class PredictionsController < ApplicationController
     @prediction = Prediction.where(q).first_or_initialize
     
     respond_to do |format|
-      if @prediction.save
+      if @prediction.save && (p[:email] =~ Regexp.new(Settings.email_regexp))
         @notice = "Your task were accepted, the result will be sent to you by email"
         Resque.enqueue(ProgressPrediction, @prediction.id, p[:email])
         format.html { render action: "new" }
