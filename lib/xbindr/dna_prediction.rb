@@ -48,7 +48,7 @@ module XbindR
       self.clean_tmp
     end
 
-    # protected
+    protected
 
     def exec_blastpgp
       cmd = "#{Settings.bin_dir}/blastpgp -b 0 -j 3 \
