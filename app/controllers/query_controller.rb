@@ -32,7 +32,7 @@ class QueryController < ApplicationController
   end
 
   def get_pdb!
-    @pdb = Pdb.where(entry_id: @entry_id).first
+    @pdb = Pdb.where("entry_id like ?", @entry_id).first
     return render_query_error "PDB not found!" if @pdb.nil?
   end
 

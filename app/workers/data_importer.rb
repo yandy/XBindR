@@ -57,7 +57,9 @@ class DataImporter
             res_seq << res1
             res_status << ((dist <= 3.5) ? "+" : "-")
         end
-        Prediction.create res_seq: res_seq, res_status: res_status, cutoff: "3.5", nt: Prediction::TYPE_DNA
+        pred = Prediction.new res_seq: res_seq, cutoff: "3.5", nt: Prediction::TYPE_DNA
+        pred.res_status = res_status
+        pred.save
       end
     end
     Dir.foreach(RNA_PATH) do |f|
@@ -110,7 +112,9 @@ class DataImporter
             res_seq << res1
             res_status << ((dict <= 3.5) ? "+" : "-")
         end
-        Prediction.create res_seq: res_seq, res_status: res_status, cutoff: "3.5", nt: Prediction::TYPE_RNA
+        pred = Prediction.new res_seq: res_seq, cutoff: "3.5", nt: Prediction::TYPE_RNA
+        pred.res_status = res_status
+        pred.save
 
         res_seq = ""
         res_status = ""
@@ -118,7 +122,9 @@ class DataImporter
             res_seq << res1
             res_status << ((dict <= 6.0) ? "+" : "-")
         end
-        Prediction.create res_seq: res_seq, res_status: res_status, cutoff: "6.0", nt: Prediction::TYPE_RNA
+        pred = Prediction.new res_seq: res_seq, cutoff: "6.0", nt: Prediction::TYPE_RNA
+        pred.res_status = res_status
+        pred.save
       end
     end
   end

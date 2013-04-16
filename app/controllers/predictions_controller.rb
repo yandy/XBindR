@@ -37,10 +37,13 @@ class PredictionsController < ApplicationController
   def create
     p = params[:prediction]
     q = filter_params(p)
-    @prediction = Prediction.where(q).first_or_initialize
+    @prediction = Prediction.where(nt: q[:nt], cutoff: q[:cutoff]).where("res_seq like ?", q[:res_seq]).first
+    if @prediction.nil?
+      @prediction = Prediction.new q
+    end
     
     respond_to do |format|
-      if @prediction.save && (p[:email] =~ Regexp.new(Settings.email_regexp))
+      if @prediction.save
         @notice = "Your task were accepted, the result will be sent to you by email"
         Resque.enqueue(ProgressPrediction, @prediction.id, p[:email])
         format.html { render action: "new" }
@@ -88,8 +91,9 @@ class PredictionsController < ApplicationController
     res_seq = rl.join ""
     q = {
       :res_seq => res_seq,
-      :nt => p[:nt],
+      :nt => p[:nt].to_i,
       :cutoff => p[:cutoff].to_f
+      :email => p[:email]
     }
     q
   end

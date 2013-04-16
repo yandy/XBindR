@@ -2,10 +2,14 @@ require 'xbindr'
 
 class Prediction < ActiveRecord::Base
 
+	after_initialize :default_values
+
 	TYPE_DNA = 0
 	TYPE_RNA = 1
 
-	attr_accessible :res_seq, :nt, :cutoff, :res_status
+	attr_accessor :email
+
+	attr_accessible :res_seq, :nt, :cutoff, :email
 
 	validates :res_seq,
 	:format => {
@@ -16,6 +20,14 @@ class Prediction < ActiveRecord::Base
 	validates :cutoff, :inclusion => { :in => [3.5, 6.0]}
 
 	validates :nt, :inclusion => { :in => [TYPE_DNA, TYPE_RNA] }
+
+	validates :email, :format => {
+		:with => Regexp.new(Settings.email_regexp)
+	}
+
+	def default_values
+		self.email ||= "tmp@cbi.seu.edu.cn"
+	end
 
 	def do_predict!
 		case nt
