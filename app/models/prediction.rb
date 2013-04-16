@@ -26,7 +26,7 @@ class Prediction < ActiveRecord::Base
 	}
 
 	def default_values
-		self.email ||= "tmp@cbi.seu.edu.cn"
+		self.email ||= "yourname@example.com"
 	end
 
 	def do_predict!

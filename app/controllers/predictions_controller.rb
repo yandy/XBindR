@@ -37,7 +37,7 @@ class PredictionsController < ApplicationController
   def create
     p = params[:prediction]
     q = filter_params(p)
-    @prediction = Prediction.where(nt: q[:nt], cutoff: q[:cutoff]).where("res_seq like ?", q[:res_seq]).first
+    @prediction = Prediction.where(nt: q[:nt], cutoff: q[:cutoff]).where("res_seq like ?", "%#{q[:res_seq]}%").first
     if @prediction.nil?
       @prediction = Prediction.new q
     end
@@ -92,7 +92,7 @@ class PredictionsController < ApplicationController
     q = {
       :res_seq => res_seq,
       :nt => p[:nt].to_i,
-      :cutoff => p[:cutoff].to_f
+      :cutoff => p[:cutoff].to_f,
       :email => p[:email]
     }
     q
