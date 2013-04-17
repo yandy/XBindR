@@ -158,16 +158,22 @@ module XbindR
 
     def exec_rf
       cmd = "Rscript #{Settings.bin_dir}/RF.R #{self.rfmat_fn} #{File.join(Settings.data_dir, "RFDATA3.5")}"
-      self.vote, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
+      vote, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
       raise "Failed to exec rand forest of R" if status != 0
+      self.vote = vote.split("\n").map { |l| l.split("\t") }
     end
 
     def gen_result
       cutoff = 0.845
-      res_status = self.vote.split("\n").map do |l|
-        if l.split("\t")[0].to_f > cutoff then "-" else "+" end
-      end.join("")
+      res_status = ""
+      res_ri = []
+      self.vote.each do |s, r|
+        res_status << (s.to_f ? "-" : "+")
+        ri = (1 - s.to_f - 0.2).abs
+        res_ri << ((ri < 0.18) ? (ri * 56).to_i : 10)
+      end
       self.res_status = ('-' * (WIN_LEN/2)) + res_status + ('-' * (WIN_LEN/2))
+      self.res_ri = ([-1] * (WIN_LEN/2)) + res_ri + ([-1] * (WIN_LEN/2))
     end
 
     def clean_tmp

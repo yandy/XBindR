@@ -11,6 +11,8 @@ class Prediction < ActiveRecord::Base
 
 	attr_accessible :res_seq, :nt, :cutoff, :email
 
+	serialize :res_ri
+
 	validates :res_seq,
 	:format => {
 		:with    => Regexp.new(Settings.protein_seq_regexp),

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130411095102) do
+ActiveRecord::Schema.define(:version => 20130417023352) do
 
   create_table "chains", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20130411095102) do
     t.integer  "nt"
     t.string   "res_seq"
     t.float    "cutoff",     :limit => 255
+    t.text     "res_ri"
   end
 
   create_table "users", :force => true do |t|
