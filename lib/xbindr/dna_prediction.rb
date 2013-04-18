@@ -6,13 +6,13 @@ module XbindR
     def self.do_predict res_seq
       p = DNAPrediction.new res_seq
       p.predict_chain!
-      return p.res_status
+      return p
     end
 
 
     WIN_LEN = 11
 
-    attr_accessor :res_seq, :res_status
+    attr_accessor :res_seq, :res_status, :res_ri
     attr_accessor :runtimestamp, :runtime_root, :fn_root
     attr_accessor :seq_fn, :pssm_assic_fn, :pssm_chk_fn, :psipass2_fn, :rfmat_fn
     attr_accessor :pssmpp, :seconary, :sixenc, :vote

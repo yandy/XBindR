@@ -34,9 +34,13 @@ class Prediction < ActiveRecord::Base
 	def do_predict!
 		case nt
 		when 0
-			self.res_status = XbindR::DNAPrediction.do_predict res_seq
+			p = XbindR::DNAPrediction.do_predict res_seq
+			self.res_status = p.res_status
+			self.res_ri = p.res_ri
 		when 1
-			self.res_status = XbindR::RNAPrediction.do_predict res_seq, cutoff.to_f
+			p = XbindR::RNAPrediction.do_predict res_seq, cutoff.to_f
+			self.res_status = p.res_status
+			self.res_ri = p.res_ri
 		end
 		self.save
 	end
