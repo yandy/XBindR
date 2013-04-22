@@ -114,6 +114,14 @@ module XbindR
       self.vote = vote.split("\n").map { |l| l.split("\t") }
     end
 
+    def gen_rfmat
+      raise "Not Implemented"
+    end
+
+    def gen_result
+      raise "Not Implemented"
+    end
+
     def clean_tmp
       FileUtils.rm_rf(self.runtime_root)
     end

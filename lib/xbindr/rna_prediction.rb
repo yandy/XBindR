@@ -37,5 +37,34 @@ module XbindR
       self.clean_tmp
     end
 
+    protected
+
+    def gen_rfmat
+      f = File.open(self.rfmat_fn, 'w')
+      (self.res_seq.length - self.winlength + 1).times.each do |idx|
+        offset = idx + self.winlength - 1
+        f.write self.pssmpp[idx..offset].map { |l| l.join "\t" }.join "\t"
+        f.write "\t"
+        f.write self.seconary[idx..offset].map { |l| l.join "\t" }.join "\t"
+        f.write "\t"
+        f.write self.sixenc[idx..offset].join "\t"
+        f.write "\n"
+      end
+      f.close
+    end
+
+    def gen_result
+      vcutoff = 0.845
+      res_status = ""
+      res_ri = []
+      self.vote.each do |s, r|
+        res_status << ((s.to_f > vcutoff) ? "-" : "+")
+        ri = (1 - s.to_f - 0.2).abs
+        res_ri << ((ri < 0.18) ? (ri * 56).to_i : 10)
+      end
+      self.res_status = ('-' * (self.winlength/2)) + res_status + ('-' * (self.winlength/2))
+      self.res_ri = ([-1] * (self.winlength/2)) + res_ri + ([-1] * (self.winlength/2))
+    end
+
   end
 end
