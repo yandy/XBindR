@@ -105,6 +105,13 @@ module XbindR
       self.sixenc = sixenc
     end
 
+    def gen_pcc
+      ni = [0, 0, 0, 0]
+      self.res_seq.each_char do |c|
+        XConst::PCC
+      end
+    end
+
     def gen_vote
       return if !!self.vote
       rbin = ((self.cutoff == 3.5) ? "RF.R" : "RF6.R")
