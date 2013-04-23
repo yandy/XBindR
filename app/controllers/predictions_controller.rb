@@ -41,7 +41,7 @@ class PredictionsController < ApplicationController
     if @prediction.nil?
       @prediction = Prediction.new q
     end
-    
+
     respond_to do |format|
       if @prediction.save
         @notice = "Your task were accepted, the result will be sent to you by email"

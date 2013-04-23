@@ -9,7 +9,7 @@ module XbindR
     attr_accessor :res_seq, :cutoff, :res_status, :res_ri
     attr_accessor :runtimestamp, :runtime_root, :fn_root, :winlength
     attr_accessor :seq_fn, :pssm_assic_fn, :pssm_chk_fn, :psipass2_fn, :rfmat_fn
-    attr_accessor :npssm, :pssmpp, :seconary, :sixenc, :vote
+    attr_accessor :npssm, :pssmpp, :seconary, :sixenc, :ppc, :vote
 
     protected
 
@@ -106,10 +106,13 @@ module XbindR
     end
 
     def gen_pcc
+      pcc_seq = []
       ni = [0, 0, 0, 0]
       self.res_seq.each_char do |c|
-        XConst::PCC
+        pcc_seq << XConst::PCC[c]
+        ni[XConst::PCC[c]] += 1
       end
+      #TODO
     end
 
     def gen_vote
