@@ -9,7 +9,7 @@ module XbindR
     attr_accessor :res_seq, :cutoff, :res_status, :res_ri
     attr_accessor :runtimestamp, :runtime_root, :fn_root, :winlength
     attr_accessor :seq_fn, :pssm_assic_fn, :pssm_chk_fn, :psipass2_fn, :rfmat_fn
-    attr_accessor :npssm, :pssmpp, :seconary, :sixenc, :ppc, :vote
+    attr_accessor :npssm, :pssmpp, :seconary, :sixenc, :ppc, :vote, :pssm_label
 
     protected
 

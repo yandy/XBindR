@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130417023352) do
+ActiveRecord::Schema.define(:version => 20131121051859) do
 
   create_table "chains", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -31,13 +31,15 @@ ActiveRecord::Schema.define(:version => 20130417023352) do
   end
 
   create_table "predictions", :force => true do |t|
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.string   "res_status"
     t.integer  "nt"
     t.string   "res_seq"
     t.float    "cutoff",     :limit => 255
-    t.text     "res_ri"
+    t.text     "res_ri",     :limit => 255
+    t.boolean  "pdb_flag",                  :default => false
+    t.integer  "pdb_id"
   end
 
   create_table "users", :force => true do |t|

@@ -1,4 +1,10 @@
 %legend
   = "Prediction Result"
 
+- if @prediction.from_pdb?
+  .alert.alert-warning
+    = "This result is from certain pdb file"
+    = link_to query_path(entry_id: @prediction.pdb.entry_id, cutoff: @prediction.cutoff) do
+      = "Click to see origin pdb file"
+
 = format_seq_tbl(res_seq: @prediction.res_seq, res_status: @prediction.res_status, res_ri: @prediction.res_ri)

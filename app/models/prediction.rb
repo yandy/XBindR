@@ -2,6 +2,8 @@ require 'xbindr'
 
 class Prediction < ActiveRecord::Base
 
+	belongs_to :pdb
+
 	after_initialize :default_values
 
 	TYPE_DNA = 0
@@ -26,6 +28,10 @@ class Prediction < ActiveRecord::Base
 	validates :email, :format => {
 		:with => Regexp.new(Settings.email_regexp)
 	}
+
+	def from_pdb?
+		pdb_flag
+	end
 
 	def default_values
 		self.email ||= "yourname@example.com"
