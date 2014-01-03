@@ -44,7 +44,7 @@ class Prediction < ActiveRecord::Base
 			self.res_status = p.res_status
 			self.res_ri = p.res_ri
 		when 1
-			p = XbindR::RNAPrediction.do_predict res_seq, cutoff.to_f
+			p = XbindR::RNAPrediction.do_predict res_seq, cutoff
 			self.res_status = p.res_status
 			self.res_ri = p.res_ri
 		end
