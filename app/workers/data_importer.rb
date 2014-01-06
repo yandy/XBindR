@@ -60,6 +60,8 @@ class DataImporter
         pred = Prediction.new res_seq: res_seq, cutoff: "3.5", nt: Prediction::TYPE_DNA
         pred.res_status = res_status
         pred.res_ri = [-1] * res_status.length
+        pred.pdb_flag = true
+        pred.pdb = pdb
         pred.save
       end
     end
@@ -116,6 +118,8 @@ class DataImporter
         pred = Prediction.new res_seq: res_seq, cutoff: "3.5", nt: Prediction::TYPE_RNA
         pred.res_status = res_status
         pred.res_ri = [-1] * res_status.length
+        pred.pdb_flag = true
+        pred.pdb = pdb
         pred.save
 
         res_seq = ""
@@ -127,6 +131,8 @@ class DataImporter
         pred = Prediction.new res_seq: res_seq, cutoff: "6.0", nt: Prediction::TYPE_RNA
         pred.res_status = res_status
         pred.res_ri = [-1] * res_status.length
+        pred.pdb_flag = true
+        pred.pdb = pdb
         pred.save
       end
     end

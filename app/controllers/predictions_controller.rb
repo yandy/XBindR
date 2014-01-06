@@ -37,15 +37,20 @@ class PredictionsController < ApplicationController
   def create
     p = params[:prediction]
     q = filter_params(p)
-    @prediction = Prediction.where(nt: q[:nt], cutoff: q[:cutoff]).where("res_seq like ?", "%#{q[:res_seq]}%").first
-    if @prediction.nil?
-      @prediction = Prediction.new q
+    p = Prediction.where(nt: q[:nt], cutoff: q[:cutoff]).where("res_seq like ?", "%#{q[:res_seq]}%").first
+    @prediction = Prediction.new q
+    unless p.nil?
+      i = p.res_seq.index q[:res_seq]
+      @prediction.res_status = p.res_status[i, q[:res_seq].length]
+      @prediction.res_ri = p.res_ri[i, q[:res_seq].length]
+      @prediction.pdb_flag = p.pdb_flag
+      @prediction.pdb_id = p.pdb_id
     end
 
     respond_to do |format|
       if @prediction.save
         @notice = "Your task were accepted, the result will be sent to you by email"
-        Resque.enqueue(ProgressPrediction, @prediction.id, p[:email])
+        Resque.enqueue(ProgressPrediction, @prediction.id, q[:email])
         format.html { render action: "new" }
         format.json { render json: @prediction, status: :created, location: @prediction }
       else

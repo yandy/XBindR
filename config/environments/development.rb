@@ -42,7 +42,7 @@ Xbindr::Application.configure do
     :port           => 587,
     :domain         => "cbi.seu.edu.cn",
     :authentication => 'plain',
-    :user_name      => "freestorm.cf@gmail.com",
+    :user_name      => "dotide.devel@gmail.com",
     :password       => "ebb97b5d6f6b9e8f703aecaf7347568b",
     :enable_starttls_auto => true
   }

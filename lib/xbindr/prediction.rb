@@ -9,7 +9,7 @@ module XbindR
     attr_accessor :res_seq, :cutoff, :res_status, :res_ri
     attr_accessor :runtimestamp, :runtime_root, :fn_root, :winlength
     attr_accessor :seq_fn, :pssm_assic_fn, :pssm_chk_fn, :psipass2_fn, :rfmat_fn
-    attr_accessor :npssm, :pssmpp, :seconary, :sixenc, :ppc, :vote
+    attr_accessor :npssm, :pssmpp, :seconary, :sixenc, :ppc, :vote, :pssm_label
 
     protected
 
@@ -105,23 +105,68 @@ module XbindR
       self.sixenc = sixenc
     end
 
-    def gen_pcc
-      pcc_seq = []
-      ni = [0, 0, 0, 0]
-      self.res_seq.each_char do |c|
-        pcc_seq << XConst::PCC[c]
-        ni[XConst::PCC[c]] += 1
+    def gen_pcc(seq)
+      @pccn ||= sum_pccn
+      pcc = Array.new(4,0)
+      cik = Array.new((self.winlength-1), Array.new(4, 0))
+      (0...seq.length).each do |i|
+        ((i+1)...seq.length).each do |j|
+          if seq[i] == seq[j]
+            cik[j-i-1][XConst::PCC[seq[i]]] += 1
+          end
+        end
       end
-      #TODO
+      (0..3).each do |i|
+        (1...seq.length).each do |k|
+          pcc[i] += (2**(1-k))*cik[k-1][i]
+        end
+        pcc[i] = pcc[i].to_f/(@pccn[i]*(@pccn[i]-1))
+      end
+      pcc
+    end
+
+    def sum_pccn
+      pccn = Array.new(4, 0)
+      self.res_seq.each_char { |c| pccn[XConst::PCC[c]] += 1 }
+      pccn
+    end
+
+    def gen_hc(seq)
+      @hcn ||= sum_hcn
+      hc = Array.new(4,0)
+      cik = Array.new((self.winlength-1), Array.new(4, 0))
+      (0...seq.length).each do |i|
+        ((i+1)...seq.length).each do |j|
+          if seq[i] == seq[j]
+            cik[j-i-1][XConst::HC[seq[i]]] += 1
+          end
+        end
+      end
+      (0..3).each do |i|
+        (1...seq.length).each do |k|
+          hc[i] += (2**(1-k))*cik[k-1][i]
+        end
+        hc[i] = hc[i].to_f/(@hcn[i]*(@hcn[i]-1))
+      end
+      hc
+    end
+
+    def sum_hcn
+      hcn = Array.new(4, 0)
+      self.res_seq.each_char { |c| hcn[XConst::HC[c]] += 1 }
+      hcn
     end
 
     def gen_vote
       return if !!self.vote
-      rbin = ((self.cutoff == 3.5) ? "RF.R" : "RF6.R")
-      cmd = "Rscript #{Settings.bin_dir}/#{rbin} #{self.rfmat_fn} #{File.join(Settings.data_dir, "RFDATA3.5")}"
+      cmd = "Rscript #{Settings.bin_dir}/RF.R #{self.rfmat_fn} #{File.join(Settings.data_dir, self.rdata)}"
       vote, status = Open3.capture2(cmd, :chdir => Settings.cbi_root)
       raise "Failed to exec rand forest of R" if status != 0
       self.vote = vote.split("\n").map { |l| l.split("\t") }
+    end
+
+    def rdata
+      raise "Not Implemented"
     end
 
     def gen_rfmat

@@ -39,6 +39,10 @@ module XbindR
 
     protected
 
+    def rdata
+      "DNA-RFDATA3.5"
+    end
+
     def gen_rfmat
       f = File.open(self.rfmat_fn, 'w')
       (self.res_seq.length - self.winlength + 1).times.each do |idx|
