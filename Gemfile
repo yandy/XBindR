@@ -1,6 +1,7 @@
 source 'http://ruby.taobao.org'
 
 gem 'rails', '3.2.8'
+gem 'mysql2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -45,7 +46,6 @@ end
 group :development do
   # Haml templates system
   gem 'haml-rails', '>= 0.3.4'
-  gem 'sqlite3'
   gem 'pry'
 end
 
