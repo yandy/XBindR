@@ -53,5 +53,5 @@ group :production do
   gem 'haml', "~> 3.1.4"
 
   # Use unicorn as the app server
-  gem 'unicorn'
+  gem 'thin'
 end
