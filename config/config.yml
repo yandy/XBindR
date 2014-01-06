@@ -18,7 +18,7 @@ production:
   cbi_root: '/cbi'
   bin_dir: '/cbi/bin'
   data_dir: '/cbi/data'
-  dbname: '/cbi/nr'
+  dbname: '/cbi/data/nr/nr'
   tmp_dir: '/tmp/cbi'
 
 #Test Seq
