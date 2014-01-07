@@ -16,4 +16,8 @@
     $('#prediction_nt_1').on("click", function(){
       $('#cutoff').removeClass('hidden');
     });
+    $('#prediction_nt_0').on("click", function(){
+      $('#prediction_cutoff').val('3.5');
+      $('#cutoff').addClass('hidden');
+    });
   });
