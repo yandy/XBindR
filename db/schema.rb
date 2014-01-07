@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(:version => 20131121051859) do
     t.string   "res_status"
     t.integer  "nt"
     t.string   "res_seq"
-    t.float    "cutoff",     :limit => 255
-    t.text     "res_ri",     :limit => 255
+    t.float    "cutoff"
+    t.text     "res_ri"
     t.boolean  "pdb_flag",                  :default => false
     t.integer  "pdb_id"
   end
